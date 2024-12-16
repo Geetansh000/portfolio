@@ -1,0 +1,117 @@
+// Navbar base styles
+mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.sidenav-toggle {
+  display: none;
+  transition: transform 300ms ease-in-out;
+}
+
+// Navbar links
+.navbar-links {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-links a {
+  margin-right: 15px;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+// The underline effect using ::after
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  transition: width 0.3s ease, background-color 0.3s ease; /* Smooth transition for width and color */
+}
+
+// Hover effect on links
+.navbar-links a:hover {
+  -webkit-background-clip: text; /* For Safari */
+  background-clip: text; /* Clip the background to the text */
+  transform: scale(1.1); /* Optional scaling for better emphasis */
+  border-bottom: 2px solid var(--app-background); /* Optional: underline when hovered */
+}
+
+// Hover effect on the underline
+.navbar-links a:hover::after {
+  width: 100%; /* Expand the width of the underline */
+  background-color: var(--app-background); /* Change the underline color to red */
+}
+
+// Active link
+.navbar-links a.active {
+  border-bottom: 2px solid var(--app-background); /* Optional: underline when active */
+}
+
+// Responsive design for small screens
+@media screen and (max-width: 600px) {
+  .navbar-links {
+    display: none;
+  }
+
+  .sidenav-toggle {
+    display: block;
+  }
+
+  .navbar-links.open {
+    display: block;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    padding: 10px 0;
+    animation: slide-in 300ms ease-in-out;
+  }
+
+  .navbar-links.open a {
+    padding: 10px 20px;
+    font-size: 18px;
+  }
+}
+
+// Theme toggle button
+.theme-toggle {
+  transition: transform 300ms ease-in-out, color 300ms ease-in-out;
+}
+
+.theme-toggle:hover {
+  transform: rotate(45deg);
+}
+
+// Animation for sliding effect
+@keyframes slide-in {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+

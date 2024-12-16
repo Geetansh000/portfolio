@@ -1,0 +1,36 @@
+<mat-toolbar color="primary">
+  <button
+    mat-icon-button
+    (click)="toggleSidenav()"
+    class="sidenav-toggle"
+    [@rotateHamburger]="isSidenavOpen ? 'open' : 'closed'"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span class="title">My Portfolio</span>
+
+  <div class="spacer"></div>
+
+  <div class="navbar-links" [@slideInOut]="isSidenavOpen ? 'open' : 'closed'">
+    <a
+      routerLink="/home"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Home</a
+    >
+    <a routerLink="/about" class="active" routerLinkActive="active">About</a>
+    <a routerLink="/projects" routerLinkActive="active">Projects</a>
+    <a routerLink="/contact" routerLinkActive="active">Contact</a>
+  </div>
+
+  <!-- Theme Toggle Button -->
+  <button
+    mat-icon-button
+    (click)="toggleTheme()"
+    class="theme-toggle"
+    matTooltip="Toggle Theme"
+  >
+    <mat-icon>{{ isDarkTheme ? "dark_mode" : "light_mode" }}</mat-icon>
+  </button>
+</mat-toolbar>

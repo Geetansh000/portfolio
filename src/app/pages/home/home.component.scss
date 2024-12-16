@@ -1,0 +1,68 @@
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--app-background);
+  position: relative;
+}
+
+.message-container {
+  max-width: 700px;
+  min-width: 300px;
+  padding: 20px;
+  text-align: center;
+  color: var(--text-colour);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease-in-out;
+  opacity: 0; /* Initially hidden */
+}
+
+.message-container.ng-enter,
+.message-container.ng-leave {
+  opacity: 1 !important; /* Ensure the text fades in and out */
+}
+
+.typing-container {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5rem;
+  color: var(--text-colour);
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.cursor {
+  display: inline-block;
+  animation: blink 0.8s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes deleting {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0;
+  }
+}

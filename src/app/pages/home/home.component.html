@@ -1,0 +1,14 @@
+<div class="home-container">
+  <div
+    *ngIf="cardState === 'expanded'"
+    class="message-container"
+    [@cardAnimation]="cardState"
+  >
+    <div class="typing-container">
+      <span *ngFor="let message of messages" class="message">{{
+        message
+      }}</span>
+      <span class="cursor">|</span>
+    </div>
+  </div>
+</div>
