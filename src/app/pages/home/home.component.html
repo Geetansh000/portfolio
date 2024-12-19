@@ -1,14 +1,17 @@
 <div class="home-container">
-  <div
-    *ngIf="cardState === 'expanded'"
-    class="message-container"
-    [@cardAnimation]="cardState"
-  >
-    <div class="typing-container">
-      <span *ngFor="let message of messages" class="message">{{
-        message
-      }}</span>
-      <span class="cursor">|</span>
-    </div>
-  </div>
+  <mat-card class="home-hero">
+    <mat-card-header>
+      <mat-card-title>
+        <h4>Hey There!</h4>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="typing-container">
+        <p class="animated-text">
+          <span id="dynamic-text"></span>
+          <span class="cursor">...</span>
+        </p>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>

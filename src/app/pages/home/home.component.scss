@@ -4,32 +4,23 @@
   align-items: center;
   height: 100vh;
   background: var(--app-background);
-  position: relative;
 }
 
-.message-container {
+.home-hero {
+  width: 60%;
   max-width: 700px;
-  min-width: 300px;
-  padding: 20px;
+  padding: 10px;
+  border-radius: 12px;
   text-align: center;
+  background-color: var(--card-background);
   color: var(--text-colour);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease-in-out;
-  opacity: 0; /* Initially hidden */
-}
-
-.message-container.ng-enter,
-.message-container.ng-leave {
-  opacity: 1 !important; /* Ensure the text fades in and out */
 }
 
 .typing-container {
   font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
   color: var(--text-colour);
-  white-space: nowrap;
-  overflow: hidden;
-  display: inline-block;
 }
 
 .cursor {
@@ -46,23 +37,5 @@
   }
   100% {
     opacity: 1;
-  }
-}
-
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-@keyframes deleting {
-  from {
-    width: 100%;
-  }
-  to {
-    width: 0;
   }
 }

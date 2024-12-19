@@ -1,0 +1,70 @@
+.roadmap-container {
+  width: 100%;
+  display: flex !important;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: nowrap;
+  // position: relative;
+
+  // Stepper Track
+  .stepper-track {
+    // position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column; // Align vertically
+    align-items: center;
+    gap: 8rem; // Spacing between steps
+    position: relative; // To position road and airplane
+
+    .road {
+      position: absolute;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 90%;
+      background: var(--primary); //linear-gradient(to bottom, #ccc, #999);
+      z-index: 0; // Place behind steps
+    }
+
+    .aeroplane {
+      position: absolute;
+      left: 43.3%; // Center horizontally relative to the road
+      width: 40px;
+      height: 40px;
+      // background: url("../../../../../assets/airplane.png") no-repeat center;
+      // background-size: contain;
+      transform: rotate(-45deg);
+      transition: top 0s ease-in-out; // Smooth vertical movement
+      font-size: 70px;
+    }
+
+    .step-card {
+      width: 500px;
+      text-align: center;
+      justify-content: center !important;
+      z-index: 1; // Ensure cards are above the road
+
+      .milestone-card {
+        cursor: pointer;
+        padding: 1rem;
+        border: 2px solid transparent;
+        transition: transform 0.3s ease, border-color 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+          transform: scale(1.05);
+          border-color: var(--primary);
+        }
+      }
+
+      &.active .milestone-card {
+        color: white;
+        border-color: var(--primary);
+        background: var(--primary);
+        transform: scale(1.1);
+      }
+    }
+  }
+}

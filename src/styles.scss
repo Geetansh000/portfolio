@@ -22,7 +22,7 @@ $dark-theme: mat.m2-define-dark-theme(
       // background: (
       //   app-background: black,
       //   card-background: black,
-      // ),,,,,,,
+      // ),,,,,,,,,
     ),
     density: 0,
   )
@@ -40,7 +40,7 @@ $light-theme: mat.m2-define-light-theme(
       // background: (
       //   app-background: white,
       //   card-background: #f5f5f5,
-      // ),,,,,,,
+      // ),,,,,,,,,
     ),
     // density: 0,
   )
@@ -52,12 +52,14 @@ $light-theme: mat.m2-define-light-theme(
   --app-background: linear-gradient(to bottom right, #212121, #424242);
   --text-colour: white;
   --card-background: #1e1e1e;
+  --primary: #607d8b;
 }
 .light-theme {
   @include mat.all-component-themes($light-theme);
   --app-background: linear-gradient(to bottom right, #ffffff, #dddddd);
   --text-colour: black;
   --card-background: #f5f5f5;
+  --primary: #0097a7;
 }
 // :root.dark-theme {
 //   --app-background: black;

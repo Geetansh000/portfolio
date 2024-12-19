@@ -1,0 +1,21 @@
+<div class="step-card">
+  <!-- <mat-card class="milestone-card" (click)="openDetails()">
+    <mat-card-header>
+      <mat-card-title>{{ step.title }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ step.description }}</p>
+    </mat-card-content>
+  </mat-card> -->
+
+  <!-- Step Details Popup -->
+  <div *ngIf="showPopup" class="popup-overlay" (click)="closeDetails()">
+    <div class="popup-content" (click)="$event.stopPropagation()">
+      <h2>{{ step.description }}</h2>
+      <p>{{ step.longDescription }}</p>
+      <!-- <button mat-raised-button color="primary" (click)="closeDetails()">
+        Close
+      </button> -->
+    </div>
+  </div>
+</div>

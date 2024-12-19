@@ -1,0 +1,28 @@
+<div class="roadmap-container">
+  <!-- Stepper Track -->
+  <div class="stepper-track">
+    <!-- Vertical Road -->
+    <div class="road"></div>
+
+    <!-- Aeroplane Icon -->
+    <div class="aeroplane" [ngStyle]="{ top: aeroplanePosition + 'px' }">
+      ✈️
+    </div>
+
+    <!-- Steps with Cards -->
+    <div
+      class="step-card"
+      *ngFor="let step of steps; let i = index"
+      [class.active]="currentStep === i"
+    >
+      <mat-card class="milestone-card" (click)="goToStep(i)">
+        <mat-card-header>
+          <mat-card-title>{{ step.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ step.description }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
