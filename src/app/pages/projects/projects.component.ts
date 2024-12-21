@@ -47,6 +47,30 @@ export class ProjectsComponent {
         'Docker',
         'audit logging',
       ],
+    },
+    {
+      title: 'Loan Management System',
+      tech_skills: {
+        frontend: ['React'],
+        backend: ['NestJS', 'TypeORM'],
+        db: ['MySQL'],
+        others: ['Docker', 'Event-Driven Architecture'],
+      },
+      type: 'personal',
+      description: [
+        'Developed a robust loan management system to streamline loan application and processing.',
+        'Integrated third-party adapters for customer onboarding, document verification, and risk profiling.',
+        'Implemented audit logging to ensure transparency and regulatory compliance.',
+        'Utilized Docker for seamless deployment and consistent development environments.',
+      ],
+      role: 'Backend Developer',
+      special_words: [
+        'NestJS',
+        'MySQL',
+        'Event-Driven Architecture',
+        'Docker',
+        'audit logging',
+      ],
     },{
       title: 'Loan Management System',
       tech_skills: {

@@ -4,25 +4,30 @@
   <div class="project-category-cards">
     <!-- Industry Projects Card -->
     <mat-card class="category-card industry">
-      <mat-card-header>
-        <mat-card-title>
-          <mat-icon style="font-size: 30px">business</mat-icon> Industry Projects
-        </mat-card-title>
-        <mat-card-subtitle>
-          Projects from professional work experience.
-        </mat-card-subtitle>
-      </mat-card-header>
+      <!-- <mat-card-header
+        >
+        <mat-card class="title-card">
+          <mat-card-title>
+            <mat-icon style="font-size: 30px">business</mat-icon> Industry
+            Projects
+          </mat-card-title>
+          <mat-card-subtitle>
+            Projects from professional work experience.
+          </mat-card-subtitle></mat-card
+        >
+      </mat-card-header> -->
       <mat-card-content>
         <div class="project-cards">
           <mat-card
             class="project-card"
             *ngFor="let project of industryProjects"
+            [class.small]="industryProjects.length > 4"
             (click)="viewProjectDetails(project)"
           >
             <mat-card-title>{{ project.title }}</mat-card-title>
-            <mat-card-content>
+            <!-- <mat-card-content>
               {{ project.description[0] }}
-            </mat-card-content>
+            </mat-card-content> -->
           </mat-card>
         </div>
       </mat-card-content>
@@ -30,25 +35,28 @@
 
     <!-- Personal Projects Card -->
     <mat-card class="category-card personal">
-      <mat-card-header>
-        <mat-card-title>
-          <mat-icon style="font-size: 30px">home</mat-icon> Personal Projects
-        </mat-card-title>
-        <mat-card-subtitle>
-          Projects from personal exploration and practice.
-        </mat-card-subtitle>
-      </mat-card-header>
+      <!-- <mat-card-header
+        ><mat-card class="title-card">
+          <mat-card-title>
+            <mat-icon style="font-size: 30px">home</mat-icon> Personal Projects
+          </mat-card-title>
+          <mat-card-subtitle>
+            Projects from personal exploration and practice.
+          </mat-card-subtitle></mat-card
+        >
+      </mat-card-header> -->
       <mat-card-content>
         <div class="project-cards">
           <mat-card
             class="project-card"
             *ngFor="let project of personalProjects"
+            [class.small]="personalProjects.length > 4"
             (click)="viewProjectDetails(project)"
           >
             <mat-card-title>{{ project.title }}</mat-card-title>
-            <mat-card-content>
+            <!-- <mat-card-content>
               {{ project.description[0] }}
-            </mat-card-content>
+            </mat-card-content> -->
           </mat-card>
         </div>
       </mat-card-content>

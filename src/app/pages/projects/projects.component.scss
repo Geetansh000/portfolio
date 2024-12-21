@@ -1,97 +1,99 @@
 .projects-container {
-  padding: 2rem;
+  padding: 1.8rem;
   background: var(--app-background);
   color: var(--text-colour);
 
   h1 {
+    margin: 0 auto;
+    font-size: 3.5rem;
     text-align: center;
     color: var(--primary);
-    margin-bottom: 2rem;
     animation: fadeIn 1s ease;
   }
 
   .project-category-cards {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
     gap: 2rem;
 
+    .title-card {
+      // position: absolute;
+      top: 10px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
     .category-card {
-      width: 45%;
-      border-radius: 16px; /* Top border radius */
+      // position: relative;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%; /* Keep the card circular */
+      justify-content: space-around;
+      display: flex;
+      flex-direction: column;
+      background: var(--card-background);
+      align-items: center;
       overflow: hidden;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 1.5rem;
 
       &:hover {
         transform: translateY(-5px);
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
       }
 
-      mat-card-header {
+      .project-cards {
         display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
         align-items: center;
-        background: var(--primary);
-        color: white;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
         padding: 1rem;
 
-        mat-icon {
-          margin-right: 0.5rem;
-          padding-right: 2px;
-        }
-      }
-
-      .project-cards {
-        padding: 2rem;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
-        gap: 2rem;
-
         .project-card {
+          width: 200px;
+          height: 200px;
+          padding: 0.5rem;
+          border-radius: 50%; /* Keep the title cards circular */
+          color: white;
           display: flex;
-          flex-direction: column;
           align-items: center;
           cursor: pointer;
           text-align: center;
-          background: var(--card-background);
-          color: var(--text-colour);
-          border-radius: 12px;
-          padding: 1.5rem;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-          transition: transform 0.4s ease, box-shadow 0.4s ease;
+          background: var(--primary);
+          justify-content: space-evenly;
+          font-size: 0.8rem;
+          font-weight: bold;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
 
           &:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+            transform: scale(1.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
           }
 
-          mat-card-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-          }
-
-          mat-card-content {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
+          &.small {
+            width: 150px;
+            height: 150px;
+            font-size: 0.3rem;
           }
         }
       }
     }
   }
 
+  /* Adjust for smaller screens */
   @media (max-width: 768px) {
     .project-category-cards {
       flex-direction: column;
-
       .category-card {
-        width: 100%;
+        width: 250px;
+        height: 250px;
       }
-    }
-
-    .project-cards {
-      padding: 1rem;
-      grid-template-columns: 1fr; /* 1 card per row for small screens */
     }
   }
 
