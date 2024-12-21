@@ -24,10 +24,10 @@ export class ProjectDetailComponent implements AfterViewInit {
     //""
 
     techSkills: [
-      { name: 'Angular', icon: '../../../../../assets/icons/Angular.png' },
-      { name: 'TypeScript', icon: 'assets/icons/Typescript.png' },
+      { name: 'Angular', icon: 'assets/icons/Angular.png' },
+      { name: 'TypeScript', icon: 'assets/icons/TypeScript.png' },
       { name: 'CSS', icon: 'assets/icons/CSS3.png' },
-      { name: 'HTML', icon: 'assets/icons/html.png' },
+      { name: 'HTML', icon: 'assets/icons/HTML5.png' },
     ],
   };
 

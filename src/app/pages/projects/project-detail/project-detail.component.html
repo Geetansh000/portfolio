@@ -1,11 +1,13 @@
 <div class="project-detail-container">
     <div class="project-overview">
         <h1 #title class="project-title">{{ project.title }}</h1>
-        <p #description class="project-description" [innerHTML]="project.description"></p>
+        <div class="project-description-container">
+            <p #description class="project-description" [innerHTML]="project.description"></p>
+        </div>
     </div>
 
-    <div>
-        <h1 #title class="project-title">Technologies Used</h1>
+    <div class="tech-skills-container">
+        <h1 #title class="tech-title">Technologies Used</h1>
         <div #techCards class="tech-skills">
 
             <div class="tech-card" *ngFor="let tech of project.techSkills">
