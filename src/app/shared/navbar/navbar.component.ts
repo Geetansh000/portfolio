@@ -59,7 +59,8 @@ export class NavbarComponent {
   darkClassName = 'theme-dark';
   lightClassName = 'theme-light';
   ngOnInit() {
-    const rootElement = document.documentElement;
+    const rootElement = document?.documentElement;
+    console.log("🚀 ~ NavbarComponent ~ ngOnInit ~ rootElement:", rootElement)
     if (this.isDarkTheme) {
       rootElement.classList.remove('light-theme');
       rootElement.classList.add('dark-theme');

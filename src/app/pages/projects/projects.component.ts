@@ -6,6 +6,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -71,7 +72,8 @@ export class ProjectsComponent {
         'Docker',
         'audit logging',
       ],
-    },{
+    },
+    {
       title: 'Loan Management System',
       tech_skills: {
         frontend: ['React'],
@@ -94,7 +96,8 @@ export class ProjectsComponent {
         'Docker',
         'audit logging',
       ],
-    },{
+    },
+    {
       title: 'Loan Management System',
       tech_skills: {
         frontend: ['React'],
@@ -117,7 +120,8 @@ export class ProjectsComponent {
         'Docker',
         'audit logging',
       ],
-    },{
+    },
+    {
       title: 'Loan Management System',
       tech_skills: {
         frontend: ['React'],
@@ -174,7 +178,7 @@ export class ProjectsComponent {
   selectedProject: any = null;
   industryProjects = this.projects.filter((p) => p.type === 'industry');
   personalProjects = this.projects.filter((p) => p.type === 'personal');
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private router: Router) {}
 
   openProjectModal(project: any): void {
     this.selectedProject = project;
@@ -192,6 +196,11 @@ export class ProjectsComponent {
     return text;
   }
   viewProjectDetails(project: any): void {
+    this.selectedProject = project;
+    this.router.navigate(['/project-detail'], {
+      queryParams: { id: project.id },
+    });
+
     // this.dialog.open(ProjectDetailsDialogComponent, {
     //   data: project,
     //   width: '600px',

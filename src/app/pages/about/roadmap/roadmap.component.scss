@@ -29,14 +29,15 @@
     }
 
     .aeroplane {
-      position: absolute;
-      left: 43.3%; // Center horizontally relative to the road
-      width: 40px;
-      height: 40px;
-      // background: url("../../../../../assets/airplane.png") no-repeat center;
-      // background-size: contain;
+      z-index: 3;
+      position: relative;
+      // left: 43.3%; // Center horizontally relative to the road
+      // width: 40px;
+      // height: 40px;
+      // // background: url("../../../../../assets/airplane.png") no-repeat center;
+      // // background-size: contain;
       transform: rotate(-45deg);
-      transition: top 0s ease-in-out; // Smooth vertical movement
+      // transition: top 0s ease-in-out; // Smooth vertical movement
       font-size: 70px;
     }
 
