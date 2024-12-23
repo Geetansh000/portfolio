@@ -76,7 +76,7 @@ export class RoadmapComponent {
           ((scrollTop - containerTop) / scrollRange) * containerHeight,
           0
         ),
-        containerHeight - 150 // Keep the plane within bounds
+        containerHeight - 270 // Keep the plane within bounds
       );
     }
   }

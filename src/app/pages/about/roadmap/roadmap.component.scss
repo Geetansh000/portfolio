@@ -30,15 +30,16 @@
 
     .aeroplane {
       z-index: 3;
+      display: flex;
       position: relative;
-      // left: 43.3%; // Center horizontally relative to the road
-      // width: 40px;
-      // height: 40px;
-      // // background: url("../../../../../assets/airplane.png") no-repeat center;
-      // // background-size: contain;
-      transform: rotate(-45deg);
-      // transition: top 0s ease-in-out; // Smooth vertical movement
-      font-size: 70px;
+      justify-content: center;
+      transition: top 1s ease-in-out; // Smooth vertical movement
+
+      .aeroplane-icon {
+        text-align: center;
+        transform: rotate(135deg);
+        font-size: 150px;
+      }
     }
 
     .step-card {
