@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { gsap } from 'gsap';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,11 +8,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageSentDialogComponent } from './message-sent-dialog/message-sent-dialog.component';
 
 @Component({
   selector: 'app-contact',
   imports: [
-    
     CommonModule,
     FormsModule,
     MatInputModule,
@@ -24,7 +25,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss'],
 })
-export class ContactComponent implements AfterViewInit {
+export class ContactComponent implements OnInit {
+  constructor(private dialog: MatDialog) {}
   formData = {
     name: '',
     email: '',
@@ -35,7 +37,7 @@ export class ContactComponent implements AfterViewInit {
 
   @ViewChild('contactForm') contactForm!: ElementRef;
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.animateForm();
   }
 
@@ -66,8 +68,13 @@ export class ContactComponent implements AfterViewInit {
 
   onSubmit(form: NgForm) {
     if (form.valid) {
-      this.formSubmitted = true;
-      form.reset();
+      form.resetForm();
+      this.formSubmitted = false;
+
+      // Open success dialog
+      this.dialog.open(MessageSentDialogComponent, {
+        panelClass: 'message-sent-dialog',
+      });
     }
   }
 }

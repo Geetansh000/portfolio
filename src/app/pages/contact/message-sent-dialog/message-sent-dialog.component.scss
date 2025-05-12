@@ -1,0 +1,24 @@
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+  width: 300px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.sent-icon {
+  width: 60px;
+  height: 60px;
+  font-size: 60px;
+  color: var(--primary);
+}
+
+.sent-message {
+  margin-top: 1.4rem;
+  font-size: 1.4rem;
+  margin-bottom: 0;
+  font-weight: 500;
+}
