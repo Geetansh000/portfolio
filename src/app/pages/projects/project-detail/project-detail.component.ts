@@ -1,8 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { gsap } from 'gsap';
-
-const angularIcon = '../';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-project-detail',
@@ -10,59 +7,55 @@ const angularIcon = '../';
   styleUrls: ['./project-detail.component.scss'],
   imports: [CommonModule],
 })
-export class ProjectDetailComponent implements AfterViewInit {
+export class ProjectDetailComponent implements OnInit {
   @ViewChild('title', { static: false }) title!: ElementRef;
   @ViewChild('description', { static: false }) description!: ElementRef;
   @ViewChild('techCards', { static: false }) techCards!: ElementRef;
 
   project = {
     title: 'Sample Project',
-    description: `
-      This is a <strong>sample project</strong> showcasing the project details.
-      It uses various <strong>technologies</strong> and demonstrates best practices.
-    `,
-    //""
-
-    techSkills: [
-      { name: 'Angular', icon: 'assets/icons/Angular.png' },
-      { name: 'TypeScript', icon: 'assets/icons/TypeScript.png' },
-      { name: 'CSS', icon: 'assets/icons/CSS3.png' },
-      { name: 'HTML', icon: 'assets/icons/HTML5.png' },
+    description: [
+      'This is a sample project</strong> showcasing the project details.',
+      'It uses various <strong>technologies</strong> and demonstrates best practices.',
     ],
-  };
+    role: 'Full Stack Developer',
 
-  ngAfterViewInit(): void {
-    this.animatePage();
+    techSkills: {
+      db: ['MySQL'],
+      others: ['Docker', 'Event-Driven Architecture'],
+      backend: ['NestJS', 'TypeORM'],
+      frontend: ['React'],
+    },
+  };
+  showIcons = true;
+
+  techCategories: string[] = [];
+
+  ngOnInit(): void {
+    this.techCategories = Object.keys(this.project.techSkills);
   }
 
-  animatePage(): void {
-    // Animate Title
-    gsap.from(this.title.nativeElement, {
-      opacity: 0,
-      y: -50,
-      duration: 1,
-      ease: 'power3.out',
-    });
+  formatCategoryName(category: string): string {
+    const map: Record<string, string> = {
+      db: 'Databases',
+      backend: 'Backend',
+      frontend: 'Frontend',
+      others: 'Others',
+    };
+    return (
+      map[category] || category.charAt(0).toUpperCase() + category.slice(1)
+    );
+  }
 
-    // Animate Description
-    gsap.from(this.description.nativeElement, {
-      opacity: 0,
-      x: -50,
-      duration: 1,
-      delay: 0.5,
-      ease: 'power3.out',
-    });
-
-    // Animate Tech Cards
-    const techCardElements =
-      this.techCards.nativeElement.querySelectorAll('.tech-card');
-    gsap.from(techCardElements, {
-      opacity: 0,
-      scale: 0.8,
-      stagger: 0.2,
-      delay: 1,
-      duration: 0.8,
-      ease: 'elastic.out(1, 0.75)',
-    });
+  getIconForTech(tech: string): string | null {
+    const iconMap: Record<string, string> = {
+      MySQL: 'assets/icons/MySQL.png',
+      Docker: 'assets/icons/Docker.png',
+      'Event-Driven Architecture': 'assets/icons/event-driven.png',
+      NestJS: 'assets/icons/Nestjs.png',
+      TypeORM: 'assets/icons/typeorm.png',
+      React: 'assets/icons/React.png',
+    };
+    return iconMap[tech] || null;
   }
 }

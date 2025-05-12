@@ -1,19 +1,46 @@
-<div class="project-detail-container">
-    <div class="project-overview">
-        <h1 #title class="project-title">{{ project.title }}</h1>
-        <div class="project-description-container">
-            <p #description class="project-description" [innerHTML]="project.description"></p>
-        </div>
+<div class="project-detail">
+  <div class="project-detail-container">
+    <!-- Title -->
+    <h1 class="project-title">{{ project.title }}</h1>
+
+    <!-- Description as Tags -->
+    <div class="description-tags-container">
+      <div class="description-tag" *ngFor="let bullet of project.description">
+        <span class="tag-icon" *ngIf="showIcons">💡</span> {{ bullet }}
+      </div>
     </div>
 
-    <div class="tech-skills-container">
-        <h1 #title class="tech-title">Technologies Used</h1>
-        <div #techCards class="tech-skills">
-
-            <div class="tech-card" *ngFor="let tech of project.techSkills">
-                <img [src]="tech.icon" [alt]="tech.name" />
-                <span>{{ tech.name }}</span>
-            </div>
-        </div>
+    <!-- Cartoon Boy and Role -->
+    <div class="role-tag">
+      <img class="cartoon-boy" src="assets/cartoon-boy.png" alt="Cartoon Boy" />
+      <div class="role-text">{{ project.role }}</div>
     </div>
+  </div>
+
+  <!-- Technologies Used -->
+  <div class="tech-used-page">
+    <h2 class="tech-title animate-fade-in">Technologies Used</h2>
+
+    <div class="tech-category-grid">
+      <div
+        class="tech-category-card animate-slide-up"
+        *ngFor="let category of techCategories"
+      >
+        <h3 class="category-title">{{ formatCategoryName(category) }}</h3>
+        <div class="tech-list">
+          <div
+            class="tech-item"
+            *ngFor="let tech of project.techSkills[category]"
+          >
+            <img
+              *ngIf="getIconForTech(tech)"
+              [src]="getIconForTech(tech)"
+              [alt]="tech"
+            />
+            <span>{{ tech }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
