@@ -18,29 +18,66 @@ export class RoadmapComponent {
     {
       title: 'Step 1',
       description: 'Start of your journey',
-      longDescription: 'This step involves hands-on experience with projects.',
+      longDescription:
+        'My journey began with strong academic foundations: In my 10th board exams, I achieved a state ranking as the 13th holder – an early sign of dedication and excellence.',
+      strongWords: ['10th board exams', 'state ranking', '13th'],
     },
     {
       title: 'Step 2',
       description: 'Building your foundation',
-      longDescription: 'This step involves hands-on experience with projects.',
+      longDescription:
+        'The foundation of my academic journey was firmly established during my 12th grade, where I secured a district-level top rank in the physics exam, achieving an exceptional hat-trick score of 95 in Physics, Chemistry, and Mathematics. This phase was instrumental in refining my analytical thinking and setting the stage for my future in engineering and technology.',
+      strongWords: [
+        '12th grade',
+        'district-level',
+        'top rank',
+        'physics exam',
+        'hat-trick score',
+        'Physics, Chemistry, and Mathematics',
+        'analytical thinking',
+        'engineering and technology',
+        '95',
+      ],
     },
     {
       title: 'Step 3',
       description: 'Exploring new technologies',
-      longDescription: 'This step involves hands-on experience with projects.',
+      longDescription:
+        'Driven by a passion for technology, I pursued a Bachelor of Technology at Chandigarh University with a specialization in Artificial Intelligence and Machine Learning, studying from August 2020 to June 2024. This phase exposed me to cutting-edge innovations and practical problem-solving projects.',
+      strongWords: [
+        'Chandigarh University',
+        'Artificial Intelligence',
+        'Machine Learning',
+        'August 2020',
+        'June 2024',
+      ],
     },
     {
       title: 'Step 4',
       description: 'Deploying scalable solutions',
-      longDescription: 'This step involves hands-on experience with projects.',
+      longDescription:
+        'Transitioning from academia to the professional world, I started my career as a Software Engineer at Daffodil Softwares in January 2024. Here, I apply the knowledge gained from my studies to develop and deploy scalable software solutions in real-world scenarios.',
+      strongWords: [
+        'Daffodil Softwares',
+        'January 2024',
+        'real-world scenarios',
+      ],
     },
     {
       title: 'Step 5',
       description: 'Achieving milestones',
-      longDescription: 'This step involves hands-on experience with projects.',
+      longDescription:
+        'From academic excellence to real-world impact, I’ve been recognized for quickly mastering new technologies, exceeding client expectations, and contributing reliably to team success — all reflected in the projects.',
+      strongWords: [
+        'academic excellence',
+        'real-world impact',
+        'mastering new technologies',
+        'client expectations',
+        'the projects',
+      ],
     },
   ];
+
   constructor(private dialog: MatDialog) {}
 
   openStepDetail(step: any): void {

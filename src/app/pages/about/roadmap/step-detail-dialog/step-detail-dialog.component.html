@@ -12,7 +12,7 @@
   <div *ngIf="showPopup" class="popup-overlay" (click)="closeDetails()">
     <div class="popup-content" (click)="$event.stopPropagation()">
       <h2>{{ step.description }}</h2>
-      <p>{{ step.longDescription }}</p>
+      <p class="long-description" [innerHTML]="getFormattedLongDescription()"></p>
       <!-- <button mat-raised-button color="primary" (click)="closeDetails()">
         Close
       </button> -->

@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -7,6 +8,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { Router } from '@angular/router';
+import { ApiRoutesService } from '../../shared/api-routes.service';
 
 @Component({
   standalone: true,
@@ -19,167 +21,30 @@ import { Router } from '@angular/router';
     MatIconModule,
     MatDividerModule,
     MatExpansionModule,
+    HttpClientModule,
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
 })
 export class ProjectsComponent {
-  projects = [
-    {
-      title: 'Loan Management System',
-      tech_skills: {
-        frontend: ['React'],
-        backend: ['NestJS', 'TypeORM'],
-        db: ['MySQL'],
-        others: ['Docker', 'Event-Driven Architecture'],
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+    private readonly projectService: ApiRoutesService
+  ) {}
+  selectedProject: any;
+  projects: any[] = [];
+  ngOnInit(): void {
+    console.log('🚀 ~ ngOnInit ~ this.projects:', this.projects);
+    this.projectService.getProjects().subscribe({
+      next: (data) => {
+        this.projects = data;
       },
-      type: 'personal',
-      description: [
-        'Developed a robust loan management system to streamline loan application and processing.',
-        'Integrated third-party adapters for customer onboarding, document verification, and risk profiling.',
-        'Implemented audit logging to ensure transparency and regulatory compliance.',
-        'Utilized Docker for seamless deployment and consistent development environments.',
-      ],
-      role: 'Backend Developer',
-      special_words: [
-        'NestJS',
-        'MySQL',
-        'Event-Driven Architecture',
-        'Docker',
-        'audit logging',
-      ],
-    },
-    {
-      title: 'Loan Management System',
-      tech_skills: {
-        frontend: ['React'],
-        backend: ['NestJS', 'TypeORM'],
-        db: ['MySQL'],
-        others: ['Docker', 'Event-Driven Architecture'],
+      error: (err) => {
+        console.error('Failed to load projects', err);
       },
-      type: 'personal',
-      description: [
-        'Developed a robust loan management system to streamline loan application and processing.',
-        'Integrated third-party adapters for customer onboarding, document verification, and risk profiling.',
-        'Implemented audit logging to ensure transparency and regulatory compliance.',
-        'Utilized Docker for seamless deployment and consistent development environments.',
-      ],
-      role: 'Backend Developer',
-      special_words: [
-        'NestJS',
-        'MySQL',
-        'Event-Driven Architecture',
-        'Docker',
-        'audit logging',
-      ],
-    },
-    {
-      title: 'Loan Management System',
-      tech_skills: {
-        frontend: ['React'],
-        backend: ['NestJS', 'TypeORM'],
-        db: ['MySQL'],
-        others: ['Docker', 'Event-Driven Architecture'],
-      },
-      type: 'personal',
-      description: [
-        'Developed a robust loan management system to streamline loan application and processing.',
-        'Integrated third-party adapters for customer onboarding, document verification, and risk profiling.',
-        'Implemented audit logging to ensure transparency and regulatory compliance.',
-        'Utilized Docker for seamless deployment and consistent development environments.',
-      ],
-      role: 'Backend Developer',
-      special_words: [
-        'NestJS',
-        'MySQL',
-        'Event-Driven Architecture',
-        'Docker',
-        'audit logging',
-      ],
-    },
-    {
-      title: 'Loan Management System',
-      tech_skills: {
-        frontend: ['React'],
-        backend: ['NestJS', 'TypeORM'],
-        db: ['MySQL'],
-        others: ['Docker', 'Event-Driven Architecture'],
-      },
-      type: 'personal',
-      description: [
-        'Developed a robust loan management system to streamline loan application and processing.',
-        'Integrated third-party adapters for customer onboarding, document verification, and risk profiling.',
-        'Implemented audit logging to ensure transparency and regulatory compliance.',
-        'Utilized Docker for seamless deployment and consistent development environments.',
-      ],
-      role: 'Backend Developer',
-      special_words: [
-        'NestJS',
-        'MySQL',
-        'Event-Driven Architecture',
-        'Docker',
-        'audit logging',
-      ],
-    },
-    {
-      title: 'Loan Management System',
-      tech_skills: {
-        frontend: ['React'],
-        backend: ['NestJS', 'TypeORM'],
-        db: ['MySQL'],
-        others: ['Docker', 'Event-Driven Architecture'],
-      },
-      type: 'personal',
-      description: [
-        'Developed a robust loan management system to streamline loan application and processing.',
-        'Integrated third-party adapters for customer onboarding, document verification, and risk profiling.',
-        'Implemented audit logging to ensure transparency and regulatory compliance.',
-        'Utilized Docker for seamless deployment and consistent development environments.',
-      ],
-      role: 'Backend Developer',
-      special_words: [
-        'NestJS',
-        'MySQL',
-        'Event-Driven Architecture',
-        'Docker',
-        'audit logging',
-      ],
-    },
-    {
-      title: 'Catering Management System',
-      tech_skills: {
-        frontend: [],
-        backend: ['Node.js', 'Express'],
-        db: ['MongoDB'],
-        others: [
-          'Paymennt Payment Gateway',
-          'Dynamic Buffet System',
-          'QR-based Reports',
-        ],
-      },
-      type: 'industry',
-      description: [
-        'Built REST APIs with the Express framework to support catering services.',
-        'Integrated the Paymennt payment gateway for secure online transactions.',
-        'Designed a dynamic system allowing users to customize buffet packages or choose predefined options.',
-        'Created QR-based reports for kitchen staff, sales, and order summaries.',
-      ],
-      role: 'Full-Stack Developer',
-      special_words: [
-        'Node.js',
-        'Express',
-        'MongoDB',
-        'Paymennt Payment Gateway',
-        'QR-based Reports',
-      ],
-    },
-  ];
-
-  selectedProject: any = null;
-  industryProjects = this.projects.filter((p) => p.type === 'industry');
-  personalProjects = this.projects.filter((p) => p.type === 'personal');
-  constructor(private dialog: MatDialog, private router: Router) {}
-
+    });
+  }
   openProjectModal(project: any): void {
     this.selectedProject = project;
   }
