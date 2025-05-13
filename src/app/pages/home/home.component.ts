@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
@@ -8,6 +9,8 @@ import { MatCardModule } from '@angular/material/card';
   imports: [MatCardModule],
 })
 export class HomeComponent implements OnInit {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   private textArray: string[] = [
     'Welcome to the World of Geetansh Sharma , a Software Developer, Expert in Node.js, NestJS, and Python ML',
   ];
@@ -19,7 +22,9 @@ export class HomeComponent implements OnInit {
   private isErasing: boolean = false; // Whether the text is being erased
 
   ngOnInit(): void {
-    this.startTypingEffect();
+    if (isPlatformBrowser(this.platformId)) {
+      this.startTypingEffect();
+    }
   }
 
   private startTypingEffect(): void {

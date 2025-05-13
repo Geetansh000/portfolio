@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -21,7 +20,6 @@ import { ApiRoutesService } from '../../shared/api-routes.service';
     MatIconModule,
     MatDividerModule,
     MatExpansionModule,
-    HttpClientModule,
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
@@ -35,7 +33,6 @@ export class ProjectsComponent {
   selectedProject: any;
   projects: any[] = [];
   ngOnInit(): void {
-    console.log('🚀 ~ ngOnInit ~ this.projects:', this.projects);
     this.projectService.getProjects().subscribe({
       next: (data) => {
         this.projects = data;

@@ -62,7 +62,7 @@ mat-toolbar {
 // Hover effect on the underline
 .navbar-links a:hover::after {
   width: 100%; /* Expand the width of the underline */
-  background-color: var(--app-background); /* Change the underline color to red */
+  background: var(--app-background); /* Change the underline color to red */
 }
 
 // Active link

@@ -1,66 +1,68 @@
 .contact-container {
-    padding: 3rem;
-    background-color: var(--app-background);
-    color: var(--text-colour);
-    text-align: center;
+  padding: 3rem;
+  background: var(--app-background);
+  color: var(--text-colour);
+  text-align: center;
+  justify-content: center;
+  min-height: 83.3vh;
+
+  .contact-card {
     max-width: 600px;
     margin: 0 auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
-    .contact-card {
-        padding: 2rem;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  .contact-title {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 2rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-field {
+    width: 100%;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1rem 0;
+    font-size: 1.2rem;
+    margin-top: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    .contact-title {
-        font-size: 2.5rem;
-        color: var(--primary);
-        margin-bottom: 2rem;
+    &:disabled {
+      background-color: #ccc;
     }
+  }
 
-    .form-group {
-        margin-bottom: 1.5rem;
+  .success-message {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    color: green;
+  }
+
+  .social-links {
+    margin-top: 2rem;
+
+    a {
+      margin: 0 1rem;
+      font-size: 1.2rem;
+      color: var(--primary);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
-
-    .form-field {
-        width: 100%;
-    }
-
-    .submit-btn {
-        width: 100%;
-        padding: 1rem 0;
-        font-size: 1.2rem;
-        margin-top: 1.5rem;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-        &:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        &:disabled {
-            background-color: #ccc;
-        }
-    }
-
-    .success-message {
-        margin-top: 2rem;
-        font-size: 1.2rem;
-        color: green;
-    }
-
-    .social-links {
-        margin-top: 2rem;
-
-        a {
-            margin: 0 1rem;
-            font-size: 1.2rem;
-            color: var(--primary);
-            text-decoration: none;
-
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-    }
+  }
 }

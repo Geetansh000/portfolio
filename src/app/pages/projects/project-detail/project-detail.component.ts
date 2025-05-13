@@ -1,18 +1,18 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-project-detail',
   templateUrl: './project-detail.component.html',
   styleUrls: ['./project-detail.component.scss'],
-  imports: [CommonModule],
+  imports: [CommonModule, NgFor],
 })
 export class ProjectDetailComponent implements OnInit {
   @ViewChild('title', { static: false }) title!: ElementRef;
   @ViewChild('description', { static: false }) description!: ElementRef;
   @ViewChild('techCards', { static: false }) techCards!: ElementRef;
 
-  project = {
+  project: { title: string, description: string[], role: string, techSkills: { [key: string]: string[] }} = {
     title: 'Sample Project',
     description: [
       'This is a sample project</strong> showcasing the project details.',

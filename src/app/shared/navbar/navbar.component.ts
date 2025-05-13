@@ -59,15 +59,16 @@ export class NavbarComponent {
   darkClassName = 'theme-dark';
   lightClassName = 'theme-light';
   ngOnInit() {
-    const rootElement = document?.documentElement;
-    console.log("🚀 ~ NavbarComponent ~ ngOnInit ~ rootElement:", rootElement)
-    if (this.isDarkTheme) {
-      rootElement.classList.remove('light-theme');
-      rootElement.classList.add('dark-theme');
-    } else {
-      rootElement.classList.remove('dark-theme');
-      rootElement.classList.add('light-theme');
-    }
+    this
+    // const rootElement = document?.documentElement;
+    // console.log("🚀 ~ NavbarComponent ~ ngOnInit ~ rootElement:", rootElement)
+    // if (this.isDarkTheme) {
+    //   rootElement.classList.remove('light-theme');
+    //   rootElement.classList.add('dark-theme');
+    // } else {
+    //   rootElement.classList.remove('dark-theme');
+    //   rootElement.classList.add('light-theme');
+    // }
   }
 
   toggleSidenav() {
@@ -82,9 +83,11 @@ export class NavbarComponent {
     if (this.isDarkTheme) {
       rootElement.classList.remove('light-theme');
       rootElement.classList.add('dark-theme');
+      localStorage.setItem('theme', 'dark-theme');
     } else {
       rootElement.classList.remove('dark-theme');
       rootElement.classList.add('light-theme');
+      localStorage.setItem('theme', 'light-theme');
     }
   }
 }

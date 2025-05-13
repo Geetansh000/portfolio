@@ -1,13 +1,20 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, OnInit } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  OnInit,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { gsap } from 'gsap';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { BrowserModule } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageSentDialogComponent } from './message-sent-dialog/message-sent-dialog.component';
 
@@ -25,8 +32,12 @@ import { MessageSentDialogComponent } from './message-sent-dialog/message-sent-d
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss'],
 })
-export class ContactComponent implements OnInit {
-  constructor(private dialog: MatDialog) {}
+export class ContactComponent implements AfterViewInit {
+  constructor(
+    private dialog: MatDialog,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
+
   formData = {
     name: '',
     email: '',
@@ -37,33 +48,39 @@ export class ContactComponent implements OnInit {
 
   @ViewChild('contactForm') contactForm!: ElementRef;
 
-  ngOnInit() {
-    this.animateForm();
+  ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.animateForm();
+    }
   }
 
   animateForm() {
-    gsap.from('.contact-title', {
-      opacity: 0,
-      y: -50,
-      duration: 1,
-      ease: 'power3.out',
-    });
-
-    gsap.from('.form-group', {
-      opacity: 0,
-      y: 50,
-      stagger: 0.2,
-      duration: 0.8,
-      ease: 'power3.out',
-    });
-
-    gsap.from('.submit-btn', {
-      opacity: 0,
-      scale: 0.8,
-      delay: 1,
-      duration: 0.8,
-      ease: 'power3.out',
-    });
+    const title = document.querySelector('.contact-title');
+    const groups = document.querySelectorAll('.form-group');
+    const button = document.querySelector('.submit-btn');
+    if (title)
+      gsap.from('.contact-title', {
+        opacity: 0,
+        y: -50,
+        duration: 1,
+        ease: 'power3.out',
+      });
+    if (groups)
+      gsap.from('.form-group', {
+        opacity: 0,
+        y: 50,
+        stagger: 0.2,
+        duration: 0.8,
+        ease: 'power3.out',
+      });
+    if (button)
+      gsap.from('.submit-btn', {
+        opacity: 0,
+        scale: 0.8,
+        delay: 1,
+        duration: 0.8,
+        ease: 'power3.out',
+      });
   }
 
   onSubmit(form: NgForm) {
