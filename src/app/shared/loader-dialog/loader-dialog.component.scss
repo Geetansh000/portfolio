@@ -1,0 +1,45 @@
+.dialog-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 8rem;
+  width: 8rem;
+  background: var(--app-background);
+  overflow: hidden;
+}
+
+.ball {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  animation: bounce 1s infinite ease-in-out, colorChange 2s infinite linear;
+}
+
+/* Bounce effect - squash at bottom */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0) scale(1.2, 0.8); /* Smashing at bottom */
+  }
+  50% {
+    transform: translateY(-6rem) scale(1, 1); /* Normal at top */
+  }
+}
+
+/* Color changing animation */
+@keyframes colorChange {
+  0% {
+    background-color: #e91e63;
+  }
+  25% {
+    background-color: #3f51b5;
+  }
+  50% {
+    background-color: #4caf50;
+  }
+  75% {
+    background-color: #ff9800;
+  }
+  100% {
+    background-color: #e91e63;
+  }
+}

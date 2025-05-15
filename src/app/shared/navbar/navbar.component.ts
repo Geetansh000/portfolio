@@ -6,8 +6,8 @@ import {
   trigger,
 } from '@angular/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { CommonModule } from '@angular/common';
-import { Component, HostBinding } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, HostBinding, Inject, PLATFORM_ID } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -52,23 +52,19 @@ import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
   ],
 })
 export class NavbarComponent {
-  constructor(private overlay: OverlayContainer) {}
+  constructor(
+    private overlay: OverlayContainer,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
   isSidenavOpen = false;
   isDarkTheme = false; // Default theme
   @HostBinding('class') className = '';
   darkClassName = 'theme-dark';
   lightClassName = 'theme-light';
   ngOnInit() {
-    this
-    // const rootElement = document?.documentElement;
-    // console.log("🚀 ~ NavbarComponent ~ ngOnInit ~ rootElement:", rootElement)
-    // if (this.isDarkTheme) {
-    //   rootElement.classList.remove('light-theme');
-    //   rootElement.classList.add('dark-theme');
-    // } else {
-    //   rootElement.classList.remove('dark-theme');
-    //   rootElement.classList.add('light-theme');
-    // }
+    if (isPlatformBrowser(this.platformId)) {
+      this.isDarkTheme = localStorage.getItem('theme') === 'dark-theme';
+    }
   }
 
   toggleSidenav() {

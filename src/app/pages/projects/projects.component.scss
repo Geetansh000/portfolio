@@ -17,12 +17,21 @@
     gap: 20px;
     padding-bottom: 1rem;
   }
-  
+
+  .projects-grid-single {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    margin: 20px auto;
+  }
+
   .project-card {
     display: flex;
     flex-direction: column;
     border-radius: 8px;
     overflow: hidden;
+    background-color: var(--card-background);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     height: 100%;
   }
@@ -32,8 +41,8 @@
     width: 100%;
   }
 
-  .card-body{
-    margin: 10px ;
+  .card-body {
+    margin: 10px;
   }
 
   .project-image {
@@ -53,12 +62,12 @@
     word-wrap: break-word;
   }
 
-  .tech {
+  .role {
     font-size: 0.8rem;
     color: #666;
   }
 }
 
 // mat-card-title {
-//   font-size: clamp(1rem, 1vw, 2rem); 
+//   font-size: clamp(1rem, 1vw, 2rem);
 // }

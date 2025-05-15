@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageSentDialogComponent } from './message-sent-dialog/message-sent-dialog.component';
+import { ApiRoutesService } from '../../shared/api-routes.service';
 
 @Component({
   selector: 'app-contact',
@@ -35,7 +36,8 @@ import { MessageSentDialogComponent } from './message-sent-dialog/message-sent-d
 export class ContactComponent implements AfterViewInit {
   constructor(
     private dialog: MatDialog,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private projectService: ApiRoutesService
   ) {}
 
   formData = {
@@ -85,13 +87,23 @@ export class ContactComponent implements AfterViewInit {
 
   onSubmit(form: NgForm) {
     if (form.valid) {
-      form.resetForm();
-      this.formSubmitted = false;
+      const formData = form.value;
+      console.log('Form Data:', formData);
+      this.projectService.submitContactForm(formData).subscribe({
+        next: (data) => {
+          form.resetForm();
+          this.formSubmitted = false;
+
+          this.dialog.open(MessageSentDialogComponent, {
+            panelClass: 'message-sent-dialog',
+          });
+        },
+        error: (err) => {
+          console.error('Failed to load projects', err);
+        },
+      });
 
       // Open success dialog
-      this.dialog.open(MessageSentDialogComponent, {
-        panelClass: 'message-sent-dialog',
-      });
     }
   }
 }

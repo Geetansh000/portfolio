@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { Router } from '@angular/router';
 import { ApiRoutesService } from '../../shared/api-routes.service';
+import { LoaderDialogComponent } from '../../shared/loader-dialog/loader-dialog.component';
 
 @Component({
   standalone: true,
@@ -31,16 +32,22 @@ export class ProjectsComponent {
     private readonly projectService: ApiRoutesService
   ) {}
   selectedProject: any;
+  display = false;
   projects: any[] = [];
   ngOnInit(): void {
+    const dialogRef = this.dialog.open(LoaderDialogComponent);
     this.projectService.getProjects().subscribe({
       next: (data) => {
         this.projects = data;
+        setTimeout(() => {
+          dialogRef.close(), (this.display = true);
+        }, 300); // smoother transition
       },
       error: (err) => {
         console.error('Failed to load projects', err);
       },
     });
+    setTimeout(() => dialogRef.close(), 3000); // fallback close
   }
   openProjectModal(project: any): void {
     this.selectedProject = project;
@@ -59,13 +66,6 @@ export class ProjectsComponent {
   }
   viewProjectDetails(project: any): void {
     this.selectedProject = project;
-    this.router.navigate(['/project-detail'], {
-      queryParams: { id: project.id },
-    });
-
-    // this.dialog.open(ProjectDetailsDialogComponent, {
-    //   data: project,
-    //   width: '600px',
-    // });
+    this.router.navigate(['/project-detail', project.slug]);
   }
 }
