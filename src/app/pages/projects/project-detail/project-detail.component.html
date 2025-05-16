@@ -1,4 +1,4 @@
-<div class="project-detail">
+<div class="project-detail" *ngIf="project">
   <div class="project-detail-container">
     <!-- Title -->
     <h1 class="project-title">{{ project.title }}</h1>
@@ -30,13 +30,11 @@
         <div class="tech-list">
           <div
             class="tech-item"
-            *ngFor="let tech of project.techSkills[category]"
+            *ngFor="let tech of project.tech_skills?.[category] || []"
           >
-            <img
-              *ngIf="getIconForTech(tech)"
-              [src]="getIconForTech(tech)"
-              [alt]="tech"
-            />
+            <ng-container *ngIf="getIconForTech(tech) as icon">
+              <img [src]="getIconForTech(tech)" [alt]="tech + ' icon'" />
+            </ng-container>
             <span>{{ tech }}</span>
           </div>
         </div>

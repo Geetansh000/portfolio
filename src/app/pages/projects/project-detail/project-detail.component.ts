@@ -1,38 +1,51 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ApiRoutesService } from '../../../shared/api-routes.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-project-detail',
   templateUrl: './project-detail.component.html',
   styleUrls: ['./project-detail.component.scss'],
+  standalone: true,
   imports: [CommonModule, NgFor],
 })
 export class ProjectDetailComponent implements OnInit {
-  @ViewChild('title', { static: false }) title!: ElementRef;
-  @ViewChild('description', { static: false }) description!: ElementRef;
-  @ViewChild('techCards', { static: false }) techCards!: ElementRef;
+  constructor(
+    private projectService: ApiRoutesService,
+    private route: ActivatedRoute
+  ) {}
 
-  project: { title: string, description: string[], role: string, techSkills: { [key: string]: string[] }} = {
-    title: 'Sample Project',
-    description: [
-      'This is a sample project</strong> showcasing the project details.',
-      'It uses various <strong>technologies</strong> and demonstrates best practices.',
-    ],
-    role: 'Full Stack Developer',
-
-    techSkills: {
-      db: ['MySQL'],
-      others: ['Docker', 'Event-Driven Architecture'],
-      backend: ['NestJS', 'TypeORM'],
-      frontend: ['React'],
-    },
-  };
+  project: any = {};
   showIcons = true;
-
   techCategories: string[] = [];
+  slug: string = '';
 
   ngOnInit(): void {
-    this.techCategories = Object.keys(this.project.techSkills);
+    this.route.paramMap.pipe(take(1)).subscribe({
+      next: (param) => {
+        const slug = param.get('id');
+        if (slug) {
+          this.slug = slug;
+          this.getProjectDetails(slug);
+        } else {
+          console.error('Slug not found in route');
+        }
+      },
+    });
+  }
+
+  getProjectDetails(slug: string) {
+    this.projectService.getProjectDetails(slug).subscribe({
+      next: (data) => {
+        this.project = data;
+        this.techCategories = Object.keys(this.project?.tech_skills || {});
+      },
+      error: (err) => {
+        console.error('Failed to load project', err);
+      },
+    });
   }
 
   formatCategoryName(category: string): string {

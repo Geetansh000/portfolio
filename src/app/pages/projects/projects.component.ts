@@ -66,6 +66,6 @@ export class ProjectsComponent {
   }
   viewProjectDetails(project: any): void {
     this.selectedProject = project;
-    this.router.navigate(['/project-detail', project.slug]);
+    this.router.navigate(['/projects/detail', project.slug]);
   }
 }

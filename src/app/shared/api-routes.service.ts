@@ -23,4 +23,10 @@ export class ApiRoutesService {
       formData
     );
   }
+
+  getProjectDetails(projectId: string) {
+    return this.http.get<any>(
+      `${environment.apiBaseUrl}${getProjectsEndpoint}${projectId}`
+    );
+  }
 }
