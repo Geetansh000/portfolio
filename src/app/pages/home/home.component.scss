@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: calc(100vh - 4rem);
   background: var(--app-background);
 }
 
@@ -38,4 +38,16 @@
   100% {
     opacity: 1;
   }
+}
+
+@media screen and (max-width: 768px) {
+  .home-container {
+    min-height: calc(100vh - 3.5rem);
+  }
+
+  .home-hero {
+    width: 90%;
+    max-width: 400px;
+  }
+  
 }

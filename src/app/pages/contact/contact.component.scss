@@ -1,10 +1,10 @@
 .contact-container {
-  padding: 3rem;
+  padding-top: 8rem;
   background: var(--app-background);
   color: var(--text-colour);
   text-align: center;
   justify-content: center;
-  min-height: 83.3vh;
+  min-height: calc(100vh - 12rem);
 
   .contact-card {
     max-width: 600px;
@@ -65,5 +65,29 @@
         text-decoration: underline;
       }
     }
+  }
+}
+
+// ✅ FIXED: Move media query outside the block
+@media screen and (max-width: 768px) {
+  .contact-container {
+    display: flex;
+    padding: 1rem;
+    min-height: calc(100vh - 5.5rem);
+    align-items: center;
+    .contact-card {
+      min-width: 95%;
+      margin: 0;
+    }
+  }
+
+  .contact-container .contact-title {
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+  }
+
+  .contact-container .social-links a {
+    margin: 0 1rem;
+    font-size: 1rem;
   }
 }

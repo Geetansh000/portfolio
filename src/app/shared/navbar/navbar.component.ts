@@ -7,13 +7,20 @@ import {
 } from '@angular/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, HostBinding, Inject, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Inject,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-navbar',
@@ -32,58 +39,52 @@ import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
     MatMenuModule,
   ],
   animations: [
-    // Animation for sliding navbar links in/out
-    trigger('slideInOut', [
-      state(
-        'void',
-        style({
-          transform: 'translateX(-100%)',
-          opacity: 0,
-        })
-      ),
-      transition(':enter, :leave', [animate('300ms ease-in-out')]),
-    ]),
-    // Rotate hamburger icon animation
     trigger('rotateHamburger', [
       state('closed', style({ transform: 'rotate(0deg)' })),
       state('open', style({ transform: 'rotate(90deg)' })),
-      transition('closed <=> open', [animate('300ms ease-in-out')]),
+      transition('closed <=> open', animate('300ms ease-in-out')),
     ]),
   ],
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
+  isMobile = false;
+  isSidenavOpen = false;
+  isDarkTheme = false;
+
+  @HostBinding('class') className = '';
+
   constructor(
+    private breakpointObserver: BreakpointObserver,
     private overlay: OverlayContainer,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
-  isSidenavOpen = false;
-  isDarkTheme = false; // Default theme
-  @HostBinding('class') className = '';
-  darkClassName = 'theme-dark';
-  lightClassName = 'theme-light';
-  ngOnInit() {
+  ) {
+    // Immediate theme setup
     if (isPlatformBrowser(this.platformId)) {
-      this.isDarkTheme = localStorage.getItem('theme') === 'dark-theme';
+      const savedTheme = localStorage.getItem('theme') || 'dark-theme';
+      this.isDarkTheme = savedTheme === 'dark-theme';
+
+      document.documentElement.classList.add(this.isDarkTheme ? 'dark-theme' : 'light-theme');
     }
   }
 
-  toggleSidenav() {
+  ngOnInit() {
+    this.breakpointObserver.observe([Breakpoints.Handset]).subscribe((result) => {
+      this.isMobile = result.matches;
+    });
+  }
+
+  toggleSidenav(drawer: MatSidenav) {
     this.isSidenavOpen = !this.isSidenavOpen;
+    this.isSidenavOpen ? drawer.open() : drawer.close();
   }
 
   toggleTheme() {
     this.isDarkTheme = !this.isDarkTheme;
 
-    // Toggle the theme class on the body or root element
-    const rootElement = document.documentElement;
-    if (this.isDarkTheme) {
-      rootElement.classList.remove('light-theme');
-      rootElement.classList.add('dark-theme');
-      localStorage.setItem('theme', 'dark-theme');
-    } else {
-      rootElement.classList.remove('dark-theme');
-      rootElement.classList.add('light-theme');
-      localStorage.setItem('theme', 'light-theme');
-    }
+    const root = document.documentElement;
+    root.classList.toggle('dark-theme', this.isDarkTheme);
+    root.classList.toggle('light-theme', !this.isDarkTheme);
+
+    localStorage.setItem('theme', this.isDarkTheme ? 'dark-theme' : 'light-theme');
   }
 }

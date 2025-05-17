@@ -19,4 +19,17 @@
   <body class="">
     <app-root></app-root>
   </body>
+  <script>
+    const storedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+
+    const themeClass =
+      storedTheme === "dark-theme" || (!storedTheme && prefersDark)
+        ? "dark-theme"
+        : "light-theme";
+
+    document.documentElement.classList.add(themeClass);
+  </script>
 </html>

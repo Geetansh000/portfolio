@@ -47,7 +47,7 @@ export class ProjectsComponent {
         console.error('Failed to load projects', err);
       },
     });
-    setTimeout(() => dialogRef.close(), 3000); // fallback close
+    // setTimeout(() => dialogRef.close(), 3000); // fallback close
   }
   openProjectModal(project: any): void {
     this.selectedProject = project;

@@ -1,4 +1,8 @@
-<div class="project-detail" *ngIf="project">
+<div
+  class="project-detail"
+  *ngIf="project"
+  [ngStyle]="{ display: display ? 'block' : 'none' }"
+>
   <div class="project-detail-container">
     <!-- Title -->
     <h1 class="project-title">{{ project.title }}</h1>
@@ -32,9 +36,12 @@
             class="tech-item"
             *ngFor="let tech of project.tech_skills?.[category] || []"
           >
-            <ng-container *ngIf="getIconForTech(tech) as icon">
-              <img [src]="getIconForTech(tech)" [alt]="tech + ' icon'" />
-            </ng-container>
+          <ng-container *ngIf="getIconForTech(tech) as icon">
+            <img
+              [src]="icon"
+              (error)="onImageError($event)"
+            />
+          </ng-container>
             <span>{{ tech }}</span>
           </div>
         </div>
