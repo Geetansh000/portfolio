@@ -1,8 +1,7 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @use "@angular/material" as mat;
 @include mat.core();
-// Light Theme: White and Grey
+
+// Light Theme
 $light-primary: mat.m2-define-palette(mat.$m2-cyan-palette, 700, 500, 900);
 $light-accent: mat.m2-define-palette(mat.$m2-cyan-palette, A200, A100, A400);
 $light-warn: mat.m2-define-palette(mat.$m2-red-palette);
@@ -11,11 +10,12 @@ $light-theme: mat.m2-define-light-theme(
     color: (
       primary: $light-primary,
       accent: $light-accent,
+      warn: $light-warn,
     ),
   )
 );
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// Dark Theme
 $dark-primary: mat.m2-define-palette(mat.$m2-blue-grey-palette, 500, 300, 700);
 $dark-accent: mat.m2-define-palette(
   mat.$m2-blue-grey-palette,
@@ -24,22 +24,18 @@ $dark-accent: mat.m2-define-palette(
   A400
 );
 $dark-warn: mat.m2-define-palette(mat.$m2-red-palette);
-
 $dark-theme: mat.m2-define-dark-theme(
   (
     color: (
       primary: $dark-primary,
       accent: $dark-accent,
-      // warn: $dark-warn,
-      // background: (
-      //   app-background: black,
-      //   card-background: black,
-      // ),,,,,,,,,,,,,,,,
+      warn: $dark-warn,
     ),
     density: 0,
   )
 );
 
+// Light Theme Styles
 .light-theme {
   @include mat.all-component-themes($light-theme);
   --app-background: linear-gradient(to bottom right, #ffffff, #dddddd);
@@ -47,31 +43,25 @@ $dark-theme: mat.m2-define-dark-theme(
   --text-white: white;
   --card-background: #f5f5f5;
   --primary: #0097a7;
-  --card-gradient-end: #ffffff; // optional
+  --card-gradient-end: #ffffff;
 }
-// Default theme to start
+
+// Dark Theme Styles
 .dark-theme {
   @include mat.all-component-themes($dark-theme);
   --app-background: linear-gradient(to bottom right, #212121, #424242);
   --text-colour: white;
   --card-background: #1e1e1e;
   --primary: #607d8b;
-  --card-gradient-end: #2c2c2c; // optional
-}
-html.light-theme {
-  @include mat.all-component-themes($light-theme);
-  --app-background: linear-gradient(to bottom right, #ffffff, #dddddd);
+  --card-gradient-end: #2c2c2c;
 }
 
-html.dark-theme {
-  @include mat.all-component-themes($dark-theme);
-  --app-background: linear-gradient(to bottom right, #212121, #424242);
-}
-
-// html,
+// General Body Styles
+html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: "Helvetica Neue", sans-serif;
