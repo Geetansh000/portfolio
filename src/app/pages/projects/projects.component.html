@@ -1,13 +1,15 @@
 <div class="projects-section">
   <h2 class="section-title">My Projects</h2>
 
-  <div
-    [ngClass]="projects.length === 1 ? 'projects-grid-single' : 'projects-grid'"
-    [ngStyle]="{ display: display ? 'flex' : 'none' }"
-  >
+  <div class="projects-grid" #projectSlider>
     <mat-card
-      *ngFor="let project of projects"
+      *ngFor="let project of projects; let i = index"
       class="project-card"
+      [ngClass]="{
+        active: i === getActiveIndex(),
+        'blurred-left': i < getActiveIndex(),
+        'blurred-right': i > getActiveIndex()
+      }"
       (click)="viewProjectDetails(project)"
     >
       <div
@@ -31,15 +33,9 @@
       </div>
     </mat-card>
   </div>
-</div>
 
-<!-- 
-"id": 1,
-"slug": "loan_management_system",
-"title": "Loan Management System",
-"short_description": "Developed a robust loan management system to streamline loan application and processing.",
-"type": "personal",
-"color": "red",
-"role": "Backend Developer",
-"icon": "assets/icons/Angular.png",
-"created_at": "2025-05-13T10:41:54.634860Z" -->
+  <div class="slider-controls">
+    <button (click)="scrollLeft()">&larr;</button>
+    <button (click)="scrollRight()">&rarr;</button>
+  </div>
+</div>

@@ -9,31 +9,65 @@
   }
 
   .projects-grid {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(260px, 1fr);
-    grid-template-rows: repeat(2, auto); /* max 2 rows */
-    overflow-x: auto;
-    gap: 20px;
-    padding-bottom: 1rem;
-  }
-
-  .projects-grid-single {
     display: flex;
+    overflow-x: auto;
     justify-content: center;
-    align-items: center;
-    width: fit-content;
-    margin: 20px auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    padding: 2rem 0;
+    gap: 20px;
+    perspective: 1000px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .project-card {
-    display: flex;
-    flex-direction: column;
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: var(--card-background);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    height: 100%;
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+    max-width: 300px;
+    transition: all 0.5s ease;
+    transform-origin: center;
+    pointer-events: none;
+    opacity: 0.3;
+    transform: scale(0.9) rotateY(10deg);
+    filter: blur(2px) brightness(0.8);
+
+    &.active {
+      opacity: 1;
+      transform: scale(1) rotateY(0);
+      filter: none;
+      pointer-events: auto;
+      z-index: 2;
+    }
+
+    &.blurred-left {
+      transform: scale(0.9) rotateY(15deg);
+      opacity: 0.3;
+      filter: blur(2px) brightness(0.7);
+    }
+
+    &.blurred-right {
+      transform: scale(0.9) rotateY(-15deg);
+      opacity: 0.3;
+      filter: blur(2px) brightness(0.7);
+    }
+
+    &.entering {
+      animation: zoomIn 0.4s ease-in-out;
+    }
+  }
+
+  @keyframes zoomIn {
+    from {
+      opacity: 0;
+      transform: scale(0.85);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
   .card-color-bar {
@@ -47,6 +81,7 @@
 
   .project-image {
     width: 80px;
+    height: 80px;
     object-fit: cover;
   }
 
@@ -59,15 +94,32 @@
   .description {
     font-size: 0.9rem;
     margin: 0.5rem 0;
-    word-wrap: break-word;
   }
 
   .role {
     font-size: 0.8rem;
     color: #666;
   }
-}
 
-// mat-card-title {
-//   font-size: clamp(1rem, 1vw, 2rem);
-// }
+  .slider-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+
+    button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      font-size: 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+    }
+  }
+}
