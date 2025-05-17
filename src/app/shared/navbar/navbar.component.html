@@ -9,24 +9,30 @@
     (closedStart)="isSidenavOpen = false"
   >
     <nav class="drawer-links">
-      <a routerLink="/" routerLinkActive="active" (click)="drawer.close()"
-        >Home</a
-      >
-      <a routerLink="/about" routerLinkActive="active" (click)="drawer.close()"
-        >About</a
-      >
+      <a routerLink="/" routerLinkActive="active" (click)="drawer.close()">
+        <mat-icon>home</mat-icon>
+        Home
+      </a>
+      <a routerLink="/about" routerLinkActive="active" (click)="drawer.close()">
+        <mat-icon>info</mat-icon>
+        About
+      </a>
       <a
         routerLink="/projects"
         routerLinkActive="active"
         (click)="drawer.close()"
-        >Projects</a
       >
+        <mat-icon>work</mat-icon>
+        Projects
+      </a>
       <a
         routerLink="/contact"
         routerLinkActive="active"
         (click)="drawer.close()"
-        >Contact</a
       >
+        <mat-icon>mail</mat-icon>
+        Contact
+      </a>
     </nav>
   </mat-sidenav>
 
@@ -62,8 +68,8 @@
         class="theme-toggle"
         matTooltip="Toggle Theme"
       >
-      <mat-icon>{{ isDarkTheme ? "dark_mode" : "light_mode" }}</mat-icon>
-    </button>
+        <mat-icon>{{ isDarkTheme ? "dark_mode" : "light_mode" }}</mat-icon>
+      </button>
     </mat-toolbar>
 
     <router-outlet></router-outlet>

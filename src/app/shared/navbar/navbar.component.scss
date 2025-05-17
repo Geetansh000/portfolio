@@ -34,19 +34,30 @@
 .navbar-links a {
   text-decoration: none;
   color: white;
-  font-weight: 500;
+  font-size: 1.2rem;
+  font-weight: 600;
   position: relative;
   transition: color 0.3s ease; /* Smooth color transition */
 }
 
 .drawer-links a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   text-decoration: none;
   color: white;
   font-size: 1.5rem;
   font-weight: 700;
   position: relative;
-  transition: color 0.3s ease; /* Smooth color transition */
+  transition: color 0.3s ease;
+
+  mat-icon {
+    width: max-content;
+    height:auto;
+    font-size: 1.8rem;
+  }
 }
+
 .desktop-links {
   display: flex;
 }
