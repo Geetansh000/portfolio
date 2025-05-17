@@ -84,7 +84,7 @@ export class ProjectDetailComponent implements OnInit {
       Laravel: 'assets/icons/Laravel.png',
       Linux: 'assets/icons/Linux.png',
       Matplotlib: 'assets/icons/Matplotlib.png',
-      Mongodb: 'assets/icons/Mongodb.png',
+      MongoDB: 'assets/icons/MongoDB.png',
       Moongoose: 'assets/icons/Mongoose.js.png',
       MySQL: 'assets/icons/MySQL.png',
       NestJS: 'assets/icons/Nest.js.png',

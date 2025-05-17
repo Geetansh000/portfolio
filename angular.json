@@ -28,6 +28,11 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "assets"
+              },
+              {
+                "input": "src",
+                "output": "/",
+                "glob": "_redirects"
               }
             ],
             "styles": ["src/styles.scss"],
