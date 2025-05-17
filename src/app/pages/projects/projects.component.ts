@@ -55,13 +55,67 @@ export class ProjectsComponent {
   private autoSlideInterval: any;
 
   ngAfterViewInit() {
-    setTimeout(() => this.scrollToActive(), 0);
+    setTimeout(() => {
+      this.scrollToActive();
+      this.attachScrollListener();
+    }, 0);
+  }
+  attachScrollListener() {
+    if (this.slider?.nativeElement) {
+      this.slider.nativeElement.addEventListener(
+        'scroll',
+        this.handleScroll.bind(this)
+      );
+    }
   }
 
+  handleScroll() {
+    const container = this.slider.nativeElement as HTMLElement;
+    const children = Array.from(container.querySelectorAll('.project-card'));
+
+    const containerCenter = container.offsetLeft + container.offsetWidth / 2;
+
+    let closestCard: HTMLElement | null = null;
+    let minDistance = Number.MAX_VALUE;
+
+    children.forEach((child) => {
+      const card = child as HTMLElement;
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(containerCenter - cardCenter);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestCard = card;
+      }
+    });
+
+    if (closestCard) {
+      this.setActiveCard(closestCard);
+    }
+  }
+  setActiveCard(activeCard: HTMLElement) {
+    const cards = this.slider.nativeElement.querySelectorAll('.project-card');
+
+    cards.forEach((card: HTMLElement, index: any) => {
+      card.classList.remove('active', 'blurred-left', 'blurred-right');
+    });
+
+    const activeIndex = Array.from(cards).indexOf(activeCard);
+
+    cards.forEach((card: HTMLElement, index: any) => {
+      if (index === activeIndex) {
+        card.classList.add('active');
+      } else if (index === activeIndex - 1) {
+        card.classList.add('blurred-left');
+      } else if (index === activeIndex + 1) {
+        card.classList.add('blurred-right');
+      }
+    });
+  }
   scrollLeft() {
     const last = this.projects.pop();
     if (last) {
       this.projects.unshift(last);
+      this.triggerCardAnimation();
       this.scrollToActive();
     }
   }
@@ -70,8 +124,22 @@ export class ProjectsComponent {
     const first = this.projects.shift();
     if (first) {
       this.projects.push(first);
+      this.triggerCardAnimation();
       this.scrollToActive();
     }
+  }
+  triggerCardAnimation() {
+    setTimeout(() => {
+      const container = this.slider.nativeElement as HTMLElement;
+      container.querySelectorAll('.project-card').forEach((card) => {
+        card.classList.remove('entering');
+      });
+
+      const activeCard = container.querySelector('.project-card.active');
+      if (activeCard) {
+        activeCard.classList.add('entering');
+      }
+    }, 0);
   }
 
   scrollToActive() {
@@ -101,9 +169,9 @@ export class ProjectsComponent {
   }
 
   startAutoSlide() {
-    this.autoSlideInterval = setInterval(() => {
-      this.scrollRight(); // 👉 Move to the next project
-    }, 3000); // 3 seconds
+    // this.autoSlideInterval = setInterval(() => {
+    //   this.scrollRight(); // 👉 Move to the next project
+    // }, 3000); // 3 seconds
   }
 
   viewProjectDetails(project: any): void {

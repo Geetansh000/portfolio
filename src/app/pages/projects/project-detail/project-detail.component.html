@@ -36,12 +36,9 @@
             class="tech-item"
             *ngFor="let tech of project.tech_skills?.[category] || []"
           >
-          <ng-container *ngIf="getIconForTech(tech) as icon">
-            <img
-              [src]="icon"
-              (error)="onImageError($event)"
-            />
-          </ng-container>
+            <ng-container *ngIf="getIconForTech(tech) as icon">
+              <img [src]="icon" (error)="onImageError($event)" />
+            </ng-container>
             <span>{{ tech }}</span>
           </div>
         </div>

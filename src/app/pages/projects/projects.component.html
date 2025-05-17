@@ -1,7 +1,12 @@
 <div class="projects-section">
   <h2 class="section-title">My Projects</h2>
 
-  <div class="projects-grid" #projectSlider>
+  <div
+    class="projects-grid"
+    #projectSlider
+    (swipeleft)="scrollRight()"
+    (swiperight)="scrollLeft()"
+  >
     <mat-card
       *ngFor="let project of projects; let i = index"
       class="project-card"
@@ -18,17 +23,18 @@
       ></div>
       <div class="card-body">
         <img
-          mat-card-image
-          [src]="project.icon"
           class="project-image"
+          [src]="project.icon"
           alt="{{ project.title }}"
         />
+
         <mat-card-title>{{ project.title }}</mat-card-title>
         <mat-card-content>
           <p class="description">{{ project.short_description }}</p>
           <p class="role">
-            {{ project.role }} <span>({{ project.type }})</span>
+            {{ project.role }}
           </p>
+          <p class="type">({{ project.type }})</p>
         </mat-card-content>
       </div>
     </mat-card>
