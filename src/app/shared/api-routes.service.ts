@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 
 const getProjectsEndpoint = '/projects/'; // ✅ Declare this outside the class/decorator
 const contactEndpoint = '/contacts/';
+const visitorEndpoint = '/visitor/';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,12 @@ export class ApiRoutesService {
   getProjectDetails(projectId: string) {
     return this.http.get<any>(
       `${environment.apiBaseUrl}${getProjectsEndpoint}${projectId}`
+    );
+  }
+
+  addVisitor() {
+    return this.http.post<any>(
+      `${environment.apiBaseUrl}${visitorEndpoint}add/`,{}
     );
   }
 }

@@ -1,6 +1,7 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ApiRoutesService } from './shared/api-routes.service';
 import { SharedModule } from './shared/shared.module';
 
 @Component({
@@ -11,7 +12,10 @@ import { SharedModule } from './shared/shared.module';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private projectService: ApiRoutesService
+  ) {}
 
   isDarkTheme: boolean = false;
   isSidenavOpen = false;
@@ -32,5 +36,17 @@ export class AppComponent {
         rootElement.classList.add('light-theme');
       }
     }
+    this.addVisitor();
+  }
+
+  addVisitor() {
+    this.projectService.addVisitor().subscribe({
+      next: (res) => {
+        console.log('Visitor tracked:', res);
+      },
+      error: (err) => {
+        console.error('Error tracking visitor:', err);
+      },
+    });
   }
 }
