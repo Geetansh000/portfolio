@@ -35,6 +35,25 @@ export class ProjectsComponent {
   display = false;
   projects: any[] = [];
   ngOnInit(): void {
+    this.startAutoSlide(); // 🚀 Start auto-slide here
+    setTimeout(() => this.getProjectList(), 1000);
+    if (!this.projects.length) setTimeout(() => this.getProjectList(), 1000);
+    else {
+      this.display = true;
+    }
+  }
+
+  @ViewChild('projectSlider', { static: false }) slider!: ElementRef;
+  private autoSlideInterval: any;
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.scrollToActive();
+      this.attachScrollListener();
+    }, 0);
+  }
+
+  getProjectList() {
     const dialogRef = this.dialog.open(LoaderDialogComponent);
     this.projectService.getProjects().subscribe({
       next: (data) => {
@@ -48,17 +67,9 @@ export class ProjectsComponent {
         console.error('Failed to load projects', err);
       },
     });
-    this.startAutoSlide(); // 🚀 Start auto-slide here
-    // setTimeout(() => dialogRef.close(), 3000); // fallback close
-  }
-  @ViewChild('projectSlider', { static: false }) slider!: ElementRef;
-  private autoSlideInterval: any;
-
-  ngAfterViewInit() {
     setTimeout(() => {
-      this.scrollToActive();
-      this.attachScrollListener();
-    }, 0);
+      dialogRef.close();
+    }, 1000); // smoother transition
   }
   attachScrollListener() {
     if (this.slider?.nativeElement) {
@@ -169,9 +180,9 @@ export class ProjectsComponent {
   }
 
   startAutoSlide() {
-    // this.autoSlideInterval = setInterval(() => {
-    //   this.scrollRight(); // 👉 Move to the next project
-    // }, 3000); // 3 seconds
+    this.autoSlideInterval = setInterval(() => {
+      this.scrollRight(); // 👉 Move to the next project
+    }, 3000); // 3 seconds
   }
 
   viewProjectDetails(project: any): void {

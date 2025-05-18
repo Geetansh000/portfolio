@@ -40,7 +40,7 @@
     </mat-card>
   </div>
 
-  <div class="slider-controls">
+  <div class="slider-controls" *ngIf="projects.length > 1">
     <button (click)="scrollLeft()">&larr;</button>
     <button (click)="scrollRight()">&rarr;</button>
   </div>
