@@ -35,12 +35,16 @@ export class ProjectsComponent {
   display = false;
   projects: any[] = [];
   ngOnInit(): void {
+    const dialogRef = this.dialog.open(LoaderDialogComponent);
+
     this.startAutoSlide(); // 🚀 Start auto-slide here
-    setTimeout(() => this.getProjectList(), 1000);
-    if (!this.projects.length) setTimeout(() => this.getProjectList(), 1000);
+    setTimeout(() => this.getProjectList(dialogRef), 1000);
+    if (!this.projects.length)
+      setTimeout(() => this.getProjectList(dialogRef), 1000);
     else {
       this.display = true;
     }
+    if (!this.projects.length) setTimeout(() => dialogRef.close(), 1000);
   }
 
   @ViewChild('projectSlider', { static: false }) slider!: ElementRef;
@@ -53,8 +57,7 @@ export class ProjectsComponent {
     }, 0);
   }
 
-  getProjectList() {
-    const dialogRef = this.dialog.open(LoaderDialogComponent);
+  getProjectList(dialogRef: any) {
     this.projectService.getProjects().subscribe({
       next: (data) => {
         this.projects = data;
@@ -67,9 +70,6 @@ export class ProjectsComponent {
         console.error('Failed to load projects', err);
       },
     });
-    setTimeout(() => {
-      dialogRef.close();
-    }, 1000); // smoother transition
   }
   attachScrollListener() {
     if (this.slider?.nativeElement) {
