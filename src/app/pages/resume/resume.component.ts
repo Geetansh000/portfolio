@@ -10,16 +10,10 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./resume.component.scss'],
 })
 export class ResumeComponent {
-  pdfBlobUrl: SafeResourceUrl | null = null;
+  pdfUrl: SafeResourceUrl;
 
-  constructor(private sanitizer: DomSanitizer) {}
-
-  ngOnInit(): void {
-    fetch('assets/Resume.pdf')
-      .then((res) => res.blob())
-      .then((blob) => {
-        const url = URL.createObjectURL(blob);
-        this.pdfBlobUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-      });
+  constructor(private sanitizer: DomSanitizer) {
+    const rawUrl = 'assets/Resume.pdf#toolbar=0&navpanes=0&scrollbar=0';
+    this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
   }
 }

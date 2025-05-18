@@ -1,25 +1,20 @@
-<div class="resume-container">
+<div class="resume-container mat-elevation-z2">
   <div class="header">
     <h2>My Resume</h2>
     <a
       href="assets/Resume.pdf"
       download="Geetansh-Sharma-Resume.pdf"
-      class="download-button"
+      mat-flat-button
+      color="primary"
     >
       Download
     </a>
   </div>
 
-  <div class="pdf-preview" *ngIf="pdfBlobUrl">
-    <object
-      [data]="pdfBlobUrl"
-      type="application/pdf"
-      width="100%"
-    >
-      <p>
-        Your browser doesn't support PDF preview.
-        <a [href]="pdfBlobUrl">Download</a> instead.
-      </p>
-    </object>
-  </div>
+  <object [data]="pdfUrl" type="application/pdf" class="pdf-viewer">
+    <p>
+      Your browser does not support PDF preview. Please click Download to
+      download the resume.
+    </p>
+  </object>
 </div>

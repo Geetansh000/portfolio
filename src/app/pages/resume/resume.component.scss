@@ -1,8 +1,8 @@
 .resume-container {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
+  padding: 1.5rem;
+  background: var(--app-background);
+  max-width: 1000px;
+  margin: auto;
 
   .header {
     display: flex;
@@ -11,31 +11,43 @@
     margin-bottom: 1rem;
 
     h2 {
+      color: var(--primary);
+      font-size: 2rem;
+
       margin: 0 auto;
+      padding-left: 6rem;
+      text-align: center;
+      flex: 1;
     }
 
-    .download-button {
-      padding: 0.5rem 1rem;
-      background-color: #3f51b5;
+    a {
       color: white;
+      background: var(--primary);
+      padding: 0.5rem 1rem;
       text-decoration: none;
-      border-radius: 4px;
-      font-weight: bold;
-
-      &:hover {
-        background-color: #303f9f;
-      }
     }
   }
 
-  .pdf-preview {
-    flex: 1;
-    overflow: hidden;
+  .pdf-viewer {
+    display: flex;
+    width: 70%;
+    height: 231.5vh;
+    border: none;
+    margin: auto;
+    justify-content: center;
+  }
+}
 
-    object {
-      border: none;
+@media screen and (max-width: 768px) {
+  .resume-container {
+    .header {
+      h2 {
+        padding-left: 3rem;
+      }
+    }
+    .pdf-viewer {
       width: 100%;
-      height: 100vh;
+      height: 83vh;
     }
   }
 }
