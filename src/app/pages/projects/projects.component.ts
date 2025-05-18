@@ -37,14 +37,24 @@ export class ProjectsComponent {
   ngOnInit(): void {
     const dialogRef = this.dialog.open(LoaderDialogComponent);
 
-    this.startAutoSlide(); // 🚀 Start auto-slide here
-    setTimeout(() => this.getProjectList(dialogRef), 1000);
-    if (!this.projects.length)
-      setTimeout(() => this.getProjectList(dialogRef), 1000);
-    else {
-      this.display = true;
-    }
-    if (!this.projects.length) setTimeout(() => dialogRef.close(), 1000);
+    // First call immediately
+    this.getProjectList(dialogRef);
+
+    // Second call after 10 seconds if still no projects
+    setTimeout(() => {
+      if (!this.projects.length) {
+        this.getProjectList(dialogRef);
+      }
+    }, 10000); // 10 seconds
+
+    // Close loader after 20 seconds if still no data
+    setTimeout(() => {
+      if (!this.projects.length) {
+        dialogRef.close();
+      }
+    }, 20000); // 20 seconds
+
+    this.startAutoSlide();
   }
 
   @ViewChild('projectSlider', { static: false }) slider!: ElementRef;
