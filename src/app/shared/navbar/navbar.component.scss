@@ -4,7 +4,7 @@
 
 .app-sidenav {
   width: 200px;
-  padding: 20px;
+  padding: 20px 0;
   // height: max-content;
   background-color: var(--primary);
   color: white;
@@ -14,7 +14,24 @@
   margin: auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+
+  a[mat-button] {
+    // border-top: 2px  solid grey;
+    border-bottom: 3px solid grey;
+    // background: var(--primary);
+    justify-content: flex-start;
+    text-align: left;
+    width: 100%;
+    margin: 0.25rem 0;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+
+    mat-icon {
+      width: 30px;
+      margin-right: 0rem;
+      background-color: rgba(63, 81, 181, 0.1); // Light primary background
+    }
+  }
 }
 
 .navbar-links {
@@ -53,7 +70,7 @@
 
   mat-icon {
     width: max-content;
-    height:auto;
+    height: auto;
     font-size: 1.8rem;
   }
 }
