@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
-const getProjectsEndpoint = '/projects/'; // ✅ Declare this outside the class/decorator
-const contactEndpoint = '/contacts/';
-const visitorEndpoint = '/visitor/';
+const getProjectsEndpoint = 'projects/'; // ✅ Declare this outside the class/decorator
+const contactEndpoint = 'contacts/';
+const visitorEndpoint = 'visitor/';
 
 @Injectable({
   providedIn: 'root',
@@ -20,20 +20,20 @@ export class ApiRoutesService {
 
   submitContactForm(formData: any) {
     return this.http.post<any>(
-      `${environment.apiBaseUrl}${contactEndpoint}create/`,
+      `${environment.apiBaseUrl}${contactEndpoint}`,
       formData
     );
   }
 
   getProjectDetails(projectId: string) {
     return this.http.get<any>(
-      `${environment.apiBaseUrl}${getProjectsEndpoint}${projectId}`
+      `${environment.apiBaseUrl}${getProjectsEndpoint}${projectId}/`
     );
   }
 
   addVisitor() {
     return this.http.post<any>(
-      `${environment.apiBaseUrl}${visitorEndpoint}add/`,{}
+      `${environment.apiBaseUrl}${visitorEndpoint}`,{}
     );
   }
 }
