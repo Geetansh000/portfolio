@@ -1,47 +1,77 @@
 <div
   class="project-detail"
   *ngIf="display && project"
+  [style.--accent]="project.color"
 >
-  <div class="project-detail-container">
-    <!-- Title -->
-    <h1 class="project-title">{{ project.title }}</h1>
-
-    <!-- Description as Tags -->
-    <div class="description-tags-container">
-      <div class="description-tag" *ngFor="let bullet of project.description">
-        <span class="tag-icon" *ngIf="showIcons">💡</span> {{ bullet }}
+  <div class="pd-hero">
+    <div class="pd-hero-inner">
+      <div class="pd-hero-left">
+        <span class="pd-eyebrow" *ngIf="project.type">{{ project.type }}</span>
+        <h1 class="pd-title">{{ project.title }}</h1>
+        <p class="pd-tagline" *ngIf="project.short_description">{{ project.short_description }}</p>
+        <div class="pd-role-chip" *ngIf="project.role">
+          <span class="pd-role-label">My Role</span>
+          <span class="pd-role-value">{{ project.role }}</span>
+        </div>
+      </div>
+      <div class="pd-hero-right">
+        <div class="pd-icon-wrap">
+          <img
+            *ngIf="project.icon"
+            [src]="project.icon"
+            [alt]="project.title"
+            class="pd-icon"
+            (error)="onImageError($event)"
+          />
+          <span class="pd-icon-mono" *ngIf="!project.icon">{{ project.title?.charAt(0) }}</span>
+        </div>
       </div>
     </div>
-
-    <!-- Cartoon Boy and Role -->
-    <div class="role-tag">
-      <img class="cartoon-boy" src="assets/cartoon-boy.png" alt="Cartoon Boy" />
-      <div class="role-text">{{ project.role }}</div>
-    </div>
+    <div class="pd-accent-bar"></div>
   </div>
 
-  <!-- Technologies Used -->
-  <div class="tech-used-page">
-    <h2 class="tech-title animate-fade-in">Technologies Used</h2>
+  <section class="pd-section pd-overview">
+    <div class="pd-section-inner">
+      <h2 class="pd-section-heading">
+        <span class="pd-section-num">01</span> Project Overview
+      </h2>
+      <ul class="pd-feature-list">
+        <li class="pd-feature-item" *ngFor="let bullet of project.description; let i = index" [style.--i]="i">
+          <span class="pd-feature-dot"></span>
+          <p>{{ bullet }}</p>
+        </li>
+      </ul>
+    </div>
+  </section>
 
-    <div class="tech-category-grid">
-      <div
-        class="tech-category-card animate-slide-up"
-        *ngFor="let category of techCategories"
-      >
-        <h3 class="category-title">{{ formatCategoryName(category) }}</h3>
-        <div class="tech-list">
-          <div
-            class="tech-item"
-            *ngFor="let tech of project.tech_skills?.[category] || []"
-          >
-            <ng-container *ngIf="getIconForTech(tech) as icon">
-              <img [src]="icon" (error)="onImageError($event)" />
-            </ng-container>
-            <span>{{ tech }}</span>
+  <section class="pd-section pd-tech">
+    <div class="pd-section-inner">
+      <h2 class="pd-section-heading">
+        <span class="pd-section-num">02</span> Tech Stack
+      </h2>
+      <div class="pd-tech-categories">
+        <div
+          class="pd-tech-category"
+          *ngFor="let category of techCategories; let ci = index"
+        >
+          <h3 class="pd-category-name">{{ formatCategoryName(category) }}</h3>
+          <div class="pd-tech-chips">
+            <div
+              class="pd-tech-chip"
+              *ngFor="let tech of project.tech_skills?.[category] || []; let ti = index"
+            >
+              <img
+                *ngIf="getIconForTech(tech)"
+                [src]="getIconForTech(tech)"
+                [alt]="tech"
+                (error)="onImageError($event)"
+                class="pd-chip-icon"
+              />
+              <span>{{ tech }}</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </div>

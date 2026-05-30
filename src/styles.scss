@@ -38,22 +38,37 @@ $dark-theme: mat.m2-define-dark-theme(
 // Light Theme Styles
 .light-theme {
   @include mat.all-component-themes($light-theme);
-  --app-background: linear-gradient(to bottom right, #ffffff, #dddddd);
-  --text-colour: black;
-  --text-white: white;
-  --card-background: #f5f5f5;
-  --primary: #0097a7;
-  --card-gradient-end: #ffffff;
+
+  & {
+    --app-background: radial-gradient(circle at 12% 12%, #e9f8fb 0%, #f4f8fb 30%, #f5f1e9 75%, #efe9de 100%);
+    --text-colour: #102329;
+    --text-white: #ffffff;
+    --card-background: rgba(255, 255, 255, 0.88);
+    --primary: #0b9aaa;
+    --card-gradient-end: #ffffff;
+    --surface-strong: #ffffff;
+    --surface-soft: #eef6f8;
+    --border-soft: rgba(16, 35, 41, 0.12);
+    --shadow-strong: 0 20px 48px rgba(10, 34, 42, 0.18);
+  }
 }
 
 // Dark Theme Styles
 .dark-theme {
   @include mat.all-component-themes($dark-theme);
-  --app-background: linear-gradient(to bottom right, #212121, #424242);
-  --text-colour: white;
-  --card-background: #1e1e1e;
-  --primary: #607d8b;
-  --card-gradient-end: #2c2c2c;
+
+  & {
+    --app-background: radial-gradient(circle at 15% 20%, #1c3f4c 0%, #141d2e 35%, #0f1119 70%, #0b0c13 100%);
+    --text-colour: #f3f7fa;
+    --text-white: #ffffff;
+    --card-background: rgba(20, 24, 33, 0.84);
+    --primary: #36c8d8;
+    --card-gradient-end: #202633;
+    --surface-strong: #181d27;
+    --surface-soft: #21293a;
+    --border-soft: rgba(215, 234, 255, 0.15);
+    --shadow-strong: 0 24px 52px rgba(0, 0, 0, 0.45);
+  }
 }
 
 // General Body Styles
@@ -64,5 +79,34 @@ body {
 
 body {
   margin: 0;
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: "Ubuntu", "Segoe UI", "Noto Sans", sans-serif;
+  background: var(--app-background);
+  color: var(--text-colour);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Trebuchet MS", "Franklin Gothic Medium", "Arial Narrow", sans-serif;
+  letter-spacing: -0.02em;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

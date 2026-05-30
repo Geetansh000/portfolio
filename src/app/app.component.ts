@@ -21,6 +21,7 @@ export class AppComponent {
   isSidenavOpen = false;
   darkClassName = 'theme-dark';
   lightClassName = 'theme-light';
+  
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.isDarkTheme = localStorage.getItem('theme') === 'dark-theme';
@@ -35,13 +36,19 @@ export class AppComponent {
         rootElement.classList.remove('dark-theme');
         rootElement.classList.add('light-theme');
       }
+      this.addVisitor();
     }
-    this.addVisitor();
   }
 
   addVisitor() {
+    // Only track visitor once per session
+    if (sessionStorage.getItem('visitor_tracked')) {
+      return;
+    }
+    
     this.projectService.addVisitor().subscribe({
       next: (res) => {
+        sessionStorage.setItem('visitor_tracked', 'true');
         console.log('Visitor tracked:', res);
       },
       error: (err) => {

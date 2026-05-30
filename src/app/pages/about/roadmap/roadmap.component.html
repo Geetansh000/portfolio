@@ -1,22 +1,30 @@
 <div class="roadmap-container">
+  <div class="journey-headline">
+    <h3>Career Journey Timeline</h3>
+    <p>From academic excellence to production-grade engineering outcomes.</p>
+  </div>
+
   <!-- Stepper Track -->
   <div class="stepper-track">
-    <!-- Vertical Road -->
-    <div class="road">
-      <div class="aeroplane" [ngStyle]="{ top: aeroplanePosition + 'px' }">
-        <div class="aeroplane-icon">✈️</div>
-      </div>
-    </div>
-
-    <!-- Aeroplane Icon -->
 
 
     <!-- Steps with Cards -->
-    <div class="step-card" *ngFor="let step of steps; let i = index" [class.active]="currentStep === i">
+    <div
+      class="step-card"
+      *ngFor="let step of steps; let i = index"
+      [class.active]="currentStep === i"
+      [class.left-card]="i % 2 === 0"
+      [class.right-card]="i % 2 !== 0"
+    >
       <mat-card class="milestone-card" (click)="goToStep(i)">
-        <mat-card-header>
-          <mat-card-title>{{ step.title }}</mat-card-title>
-        </mat-card-header>
+        <div class="step-marker">
+          <span class="step-year">{{ step.year }}</span>
+          <span class="step-badge">{{ step.badge }}</span>
+        </div>
+        <div class="step-head">
+          <img class="step-icon" [src]="step.icon" [alt]="step.title + ' icon'" loading="lazy" />
+          <h4 class="step-title">{{ step.title }}</h4>
+        </div>
         <mat-card-content>
           <p>{{ step.description }}</p>
         </mat-card-content>

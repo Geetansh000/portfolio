@@ -13,7 +13,7 @@ export class ResumeComponent {
   pdfUrl: SafeResourceUrl;
 
   constructor(private sanitizer: DomSanitizer) {
-    const rawUrl = 'assets/Resume.pdf#toolbar=0&navpanes=0&scrollbar=0';
+    const rawUrl = '/assets/Resume.pdf#toolbar=0&navpanes=0&scrollbar=0';
     this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
   }
 }

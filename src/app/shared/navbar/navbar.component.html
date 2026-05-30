@@ -70,11 +70,15 @@
         class="sidenav-toggle mobile-links"
         (click)="toggleSidenav(drawer)"
         [@rotateHamburger]="isSidenavOpen ? 'open' : 'closed'"
+        aria-label="Open navigation menu"
       >
         <mat-icon>menu</mat-icon>
       </button>
 
-      <span class="title">My Portfolio</span>
+      <div class="brand-wrap">
+        <span class="title">My Portfolio</span>
+        <span class="brand-chip">Crafted by Geetansh</span>
+      </div>
 
       <span class="spacer"></span>
 
@@ -93,6 +97,7 @@
         (click)="toggleTheme()"
         class="theme-toggle"
         matTooltip="Toggle Theme"
+        aria-label="Toggle color theme"
       >
         <mat-icon>{{ isDarkTheme ? "dark_mode" : "light_mode" }}</mat-icon>
       </button>

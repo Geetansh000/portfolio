@@ -1,53 +1,291 @@
-.resume-container {
-  padding: 1.5rem;
+// ── Resume Page ───────────────────────────────────────────────────────────────
+
+.resume-page {
+  position: relative;
   background: var(--app-background);
-  max-width: 1000px;
-  margin: auto;
+  overflow: hidden;
+}
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+// ── Glows ─────────────────────────────────────────────────────────────────────
 
-    h2 {
-      color: var(--primary);
-      font-size: 2rem;
+.resume-glow {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(100px);
+  opacity: 0.28;
+  z-index: 0;
+}
 
-      margin: 0 auto;
-      padding-left: 6rem;
-      text-align: center;
-      flex: 1;
-    }
+.resume-glow-a {
+  width: 500px;
+  height: 500px;
+  top: -150px;
+  left: -150px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--primary) 60%, transparent), transparent 70%);
+}
 
-    a {
-      color: white;
-      background: var(--primary);
-      padding: 0.5rem 1rem;
-      text-decoration: none;
-    }
-  }
+.resume-glow-b {
+  width: 420px;
+  height: 420px;
+  bottom: -100px;
+  right: -100px;
+  background: radial-gradient(circle, color-mix(in srgb, #ffbe78 70%, transparent), transparent 70%);
+}
 
-  .pdf-viewer {
-    display: flex;
-    width: 70%;
-    height: 231.5vh;
-    border: none;
-    margin: auto;
-    justify-content: center;
+// ── Hero section ──────────────────────────────────────────────────────────────
+
+.resume-hero {
+  position: relative;
+  z-index: 1;
+  padding: 6rem 2rem 4rem;
+  background: var(--surface-strong);
+  border-bottom: 1px solid var(--border-soft);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 100% 60% at 50% 0%,
+      color-mix(in srgb, var(--primary) 10%, transparent),
+      transparent 70%
+    );
+    pointer-events: none;
   }
 }
 
-@media screen and (max-width: 768px) {
-  .resume-container {
-    .header {
-      h2 {
-        padding-left: 3rem;
-      }
-    }
-    .pdf-viewer {
-      width: 100%;
-      height: 83vh;
-    }
+.resume-hero-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  opacity: 1;
+  animation: rhSlideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0ms forwards;
+}
+
+.resume-eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  border-radius: 4px;
+  padding: 0.2rem 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.resume-title {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--text-colour);
+  margin: 0 0 0.8rem;
+}
+
+.resume-tagline {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-colour);
+  opacity: 0.68;
+  max-width: 56ch;
+  margin: 0 0 2rem;
+}
+
+.resume-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  flex-wrap: wrap;
+}
+
+.resume-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.8rem;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px color-mix(in srgb, var(--primary) 40%, transparent);
+    filter: brightness(1.1);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+.rdb-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.resume-meta {
+  display: flex;
+  gap: 1.8rem;
+  align-items: center;
+}
+
+.rm-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.rm-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-colour);
+  opacity: 0.5;
+}
+
+.rm-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-colour);
+}
+
+// ── PDF Viewer section ────────────────────────────────────────────────────────
+
+.resume-viewer {
+  position: relative;
+  z-index: 1;
+  padding: 4rem 2rem;
+}
+
+.rv-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.rv-header {
+  margin-bottom: 1.5rem;
+  text-align: center;
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-colour);
+    margin: 0 0 0.4rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+    color: var(--text-colour);
+    opacity: 0.62;
+    margin: 0;
+  }
+}
+
+.rv-pdf {
+  width: 100%;
+  height: 80vh;
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  background: var(--card-background);
+  box-shadow: var(--shadow-strong);
+  animation: rvFadeIn 0.5s ease-out 200ms both;
+}
+
+.rv-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 3rem 2rem;
+  text-align: center;
+
+  p {
+    font-size: 1rem;
+    color: var(--text-colour);
+    opacity: 0.65;
+    margin: 0 0 1rem;
+  }
+}
+
+.rv-download-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--primary) 30%, transparent);
+  }
+}
+
+// ── Animation ─────────────────────────────────────────────────────────────────
+
+@keyframes rhSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rvFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+@media (max-width: 720px) {
+  .resume-hero {
+    padding: 4rem 1.2rem 3rem;
+  }
+
+  .resume-cta-row {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .resume-meta {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .resume-viewer {
+    padding: 2.5rem 1.2rem;
+  }
+
+  .rv-pdf {
+    height: 60vh;
+  }
+
+  .resume-glow-a,
+  .resume-glow-b {
+    display: none;
   }
 }

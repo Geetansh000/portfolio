@@ -1,9 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SharedModule } from '../../../shared/shared.module';
 import { StepDetailDialogComponent } from './step-detail-dialog/step-detail-dialog.component';
+
+interface JourneyStep {
+  title: string;
+  description: string;
+  longDescription: string;
+  strongWords: string[];
+  year: string;
+  badge: string;
+  icon: string;
+}
 
 @Component({
   selector: 'app-roadmap',
@@ -14,17 +24,20 @@ import { StepDetailDialogComponent } from './step-detail-dialog/step-detail-dial
 })
 export class RoadmapComponent {
   // List of steps
-  steps = [
+  steps: JourneyStep[] = [
     {
-      title: 'Step 1',
-      description: 'Start of your journey',
+      title: 'Academic Spark',
+      description: 'State rank in class 10 board exams',
       longDescription:
         'My journey began with strong academic foundations: In my 10th board exams, I achieved a state ranking as the 13th holder – an early sign of dedication and excellence.',
       strongWords: ['10th board exams', 'state ranking', '13th'],
+      year: '2018',
+      badge: 'Foundation',
+      icon: 'assets/icons/journey/foundation.svg',
     },
     {
-      title: 'Step 2',
-      description: 'Building your foundation',
+      title: 'PCM Hat-Trick',
+      description: '95 marks in Physics, Chemistry, and Mathematics',
       longDescription:
         'The foundation of my academic journey was firmly established during my 12th grade, where I secured a district-level top rank in the physics exam, achieving an exceptional hat-trick score of 95 in Physics, Chemistry, and Mathematics. This phase was instrumental in refining my analytical thinking and setting the stage for my future in engineering and technology.',
       strongWords: [
@@ -38,10 +51,13 @@ export class RoadmapComponent {
         'engineering and technology',
         '95',
       ],
+      year: '2020',
+      badge: 'Academic Peak',
+      icon: 'assets/icons/journey/academic-peak.svg',
     },
     {
-      title: 'Step 3',
-      description: 'Exploring new technologies',
+      title: 'AI/ML Engineering',
+      description: 'B.Tech specialization in Artificial Intelligence and Machine Learning',
       longDescription:
         'Driven by a passion for technology, I pursued a Bachelor of Technology at Chandigarh University with a specialization in Artificial Intelligence and Machine Learning, studying from August 2020 to June 2024. This phase exposed me to cutting-edge innovations and practical problem-solving projects.',
       strongWords: [
@@ -51,10 +67,13 @@ export class RoadmapComponent {
         'August 2020',
         'June 2024',
       ],
+      year: '2020-2024',
+      badge: 'University Track',
+      icon: 'assets/icons/journey/ai-ml.svg',
     },
     {
-      title: 'Step 4',
-      description: 'Deploying scalable solutions',
+      title: 'Industry Launch',
+      description: 'Software Engineer at Daffodil Softwares',
       longDescription:
         'Transitioning from academia to the professional world, I started my career as a Software Engineer at Daffodil Softwares in January 2024. Here, I apply the knowledge gained from my studies to develop and deploy scalable software solutions in real-world scenarios.',
       strongWords: [
@@ -62,10 +81,13 @@ export class RoadmapComponent {
         'January 2024',
         'real-world scenarios',
       ],
+      year: '2024',
+      badge: 'Professional',
+      icon: 'assets/icons/journey/industry-launch.svg',
     },
     {
-      title: 'Step 5',
-      description: 'Achieving milestones',
+      title: 'Real-World Impact',
+      description: 'Rapid delivery, strong ownership, and high client confidence',
       longDescription:
         'From academic excellence to real-world impact, I’ve been recognized for quickly mastering new technologies, exceeding client expectations, and contributing reliably to team success — all reflected in the projects.',
       strongWords: [
@@ -75,47 +97,36 @@ export class RoadmapComponent {
         'client expectations',
         'the projects',
       ],
+      year: 'Now',
+      badge: 'Growth Mode',
+      icon: 'assets/icons/journey/impact.svg',
     },
   ];
 
   constructor(private dialog: MatDialog) {}
 
-  openStepDetail(step: any): void {
-    const dialogRef = this.dialog.open(StepDetailDialogComponent);
-    // Pass the data to the dialog component using its instance
-    dialogRef.componentInstance.step = step;
+  private activeDialogRef: MatDialogRef<StepDetailDialogComponent> | null = null;
+
+  openStepDetail(step: JourneyStep): void {
+    if (this.activeDialogRef) return; // already open
+    this.activeDialogRef = this.dialog.open(StepDetailDialogComponent, {
+      autoFocus: false,
+      restoreFocus: true,
+    });
+    this.activeDialogRef.componentInstance.step = step;
+    this.activeDialogRef.beforeClosed().subscribe(() => {
+      this.activeDialogRef = null;
+    });
+    this.activeDialogRef.afterClosed().subscribe(() => {
+      this.activeDialogRef = null;
+    });
   }
 
-  currentStep = -1; // Active step
-  aeroplanePosition = 0; // Aeroplane's position in percentage
+  currentStep = -1;
 
-  // Function to move to a particular step
   goToStep(index: number): void {
     this.currentStep = index;
     this.openStepDetail(this.steps[index]);
-    // this.aeroplanePosition = (index / (this.steps.length - 1)) * 100; // Move aeroplane
-  }
-  @HostListener('window:scroll')
-  onWindowScroll() {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const container = document.querySelector(
-      '.roadmap-container'
-    ) as HTMLElement;
-
-    if (container) {
-      const containerTop = container.offsetTop;
-      const containerHeight = container.offsetHeight;
-      const scrollRange = containerHeight - window.innerHeight;
-
-      // Calculate plane position relative to scroll
-      this.aeroplanePosition = Math.min(
-        Math.max(
-          ((scrollTop - containerTop) / scrollRange) * containerHeight,
-          0
-        ),
-        containerHeight - 270 // Keep the plane within bounds
-      );
-    }
   }
   //   // List of roadmap steps
   //   steps = [

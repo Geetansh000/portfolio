@@ -1,31 +1,122 @@
 .home-container {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 4rem);
   background: var(--app-background);
+  overflow: hidden;
 }
 
 .home-hero {
-  width: 60%;
-  max-width: 700px;
-  padding: 10px;
-  border-radius: 12px;
+  z-index: 2;
+  width: min(90%, 920px);
+  padding: 1rem 1.2rem 1.4rem;
+  border-radius: 24px;
   text-align: center;
-  background: var(--card-background);
+  background: linear-gradient(145deg, color-mix(in srgb, var(--card-background) 88%, transparent), color-mix(in srgb, var(--surface-soft) 70%, transparent));
+  border: 1px solid var(--border-soft);
   color: var(--text-colour);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-strong);
+  animation: revealUp 0.8s ease both;
+}
+
+.eyebrow {
+  margin: 0.45rem auto 0.35rem;
+  width: fit-content;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 20%, transparent);
+  color: var(--text-colour);
+}
+
+mat-card-title h1 {
+  margin: 0.5rem 0;
+  font-size: clamp(1.65rem, 3vw, 2.7rem);
+  line-height: 1.2;
+}
+
+.hero-note {
+  margin: 0 auto 0.9rem;
+  max-width: 65ch;
+  font-size: 1rem;
+  opacity: 0.88;
 }
 
 .typing-container {
-  font-family: "Roboto", sans-serif;
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-weight: 600;
   color: var(--text-colour);
+}
+
+.animated-text {
+  margin: 0;
+  min-height: 3rem;
 }
 
 .cursor {
   display: inline-block;
-  animation: blink 0.8s steps(2, start) infinite;
+  animation: blink 0.9s steps(2, start) infinite;
+  color: var(--primary);
+}
+
+.hero-stats {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(120px, 1fr));
+  gap: 0.8rem;
+}
+
+.stat-item {
+  background: color-mix(in srgb, var(--surface-strong) 70%, transparent);
+  border: 1px solid var(--border-soft);
+  border-radius: 14px;
+  padding: 0.65rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  animation: revealUp 0.7s ease both;
+}
+
+.stat-item strong {
+  font-family: "Trebuchet MS", "Franklin Gothic Medium", "Arial Narrow", sans-serif;
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.stat-item span {
+  font-size: 0.82rem;
+}
+
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(4px);
+  opacity: 0.65;
+  z-index: 1;
+  animation: floatOrb 6.5s ease-in-out infinite;
+}
+
+.orb-a {
+  width: 280px;
+  height: 280px;
+  left: -70px;
+  top: 10%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--primary) 65%, #ffffff), transparent 70%);
+}
+
+.orb-b {
+  width: 240px;
+  height: 240px;
+  right: -50px;
+  bottom: 12%;
+  background: radial-gradient(circle, color-mix(in srgb, #ffb267 75%, #ffffff), transparent 70%);
+  animation-delay: 0.9s;
 }
 
 @keyframes blink {
@@ -40,14 +131,45 @@
   }
 }
 
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatOrb {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-14px) translateX(8px);
+  }
+}
+
 @media screen and (max-width: 768px) {
   .home-container {
     min-height: calc(100vh - 3.5rem);
   }
 
   .home-hero {
-    width: 90%;
-    max-width: 400px;
+    width: 92%;
+    max-width: 540px;
   }
-  
+
+  .hero-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .orb-a,
+  .orb-b {
+    opacity: 0.4;
+    width: 190px;
+    height: 190px;
+  }
 }

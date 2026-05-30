@@ -1,15 +1,57 @@
 <div class="about-container">
+  <div class="about-glow about-glow-left"></div>
+  <div class="about-glow about-glow-right"></div>
+
   <!-- About Me Section -->
   <div class="about-me-section">
-    <h2>About Me</h2>
+    <p class="about-eyebrow">About</p>
+    <h2>Building reliable software with product-first thinking</h2>
     <p>
-      Hi, I'm <strong>Geetansh Sharma</strong>, a software engineer at <strong>Daffodil Softwares</strong> passionate
-      about building scalable, high-performance applications that drive
-      meaningful impact. With deep expertise in <strong>Node.js</strong>,
-      <strong>NestJS</strong>, <strong>Django</strong>, and
-      <strong>Python Machine Learning</strong>, I specialize in delivering
-      intelligent, robust software solutions.
+      Hi, I'm <strong>Geetansh Sharma</strong>, a software engineer at <strong>Daffodil Softwares</strong> focused on
+      high-performance platforms and meaningful user outcomes. I work across
+      backend architecture, frontend systems, and data products using
+      <strong>Node.js</strong>, <strong>NestJS</strong>, <strong>Django</strong>,
+      and <strong>Python Machine Learning</strong>.
     </p>
+
+    <div class="journey-metrics">
+      <div class="metric-pill" *ngFor="let metric of journeyMetrics">
+        <strong>{{ metric.value }}</strong>
+        <span>{{ metric.label }}</span>
+      </div>
+    </div>
+
+    <div class="about-highlights">
+      <div class="highlight-card">
+        <h3>Scalable APIs</h3>
+        <p>Production-ready services with clean architecture and robust observability.</p>
+      </div>
+      <div class="highlight-card">
+        <h3>Data-Driven Products</h3>
+        <p>ML-backed capabilities that improve reliability, decisions, and automation.</p>
+      </div>
+      <div class="highlight-card">
+        <h3>Performance Mindset</h3>
+        <p>Fast UX, efficient queries, and stable delivery pipelines from dev to prod.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="skills-section" #skillsSection>
+    <h2>Core Skills</h2>
+    <p class="skills-subtitle">
+      End-to-end engineering capabilities spanning API architecture, modern frontend, data systems, and production delivery.
+    </p>
+
+    <div class="skills-grid">
+      <div class="skill-card" *ngFor="let skill of coreSkills; let i = index" [ngStyle]="getCardVars(i)">
+        <img [src]="skill.icon" [alt]="skill.name + ' icon'" loading="lazy" />
+        <div class="skill-meta">
+          <h3>{{ skill.name }}</h3>
+          <span>{{ skill.track }}</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Aeroplane Roadmap Section -->

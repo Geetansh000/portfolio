@@ -1,0 +1,16 @@
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgPeak" x1="12" y1="12" x2="84" y2="84" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1E293B"/>
+      <stop offset="1" stop-color="#0F766E"/>
+    </linearGradient>
+    <linearGradient id="medal" x1="30" y1="42" x2="66" y2="66" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FDE68A"/>
+      <stop offset="1" stop-color="#F59E0B"/>
+    </linearGradient>
+  </defs>
+  <rect x="6" y="6" width="84" height="84" rx="20" fill="url(#bgPeak)"/>
+  <path d="M36 20L45 40H51L60 20H36Z" fill="#67E8F9"/>
+  <circle cx="48" cy="56" r="18" fill="url(#medal)"/>
+  <path d="M48 45L51.4 51.9L59 53L53.5 58L54.8 65.5L48 62L41.2 65.5L42.5 58L37 53L44.6 51.9L48 45Z" fill="#78350F"/>
+</svg>

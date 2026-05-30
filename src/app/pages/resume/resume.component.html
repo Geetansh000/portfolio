@@ -1,20 +1,56 @@
-<div class="resume-container mat-elevation-z2">
-  <div class="header">
-    <h2>My Resume</h2>
-    <a
-      href="assets/Resume.pdf"
-      download="Geetansh-Sharma-Resume.pdf"
-      mat-flat-button
-      color="primary"
-    >
-      Download
-    </a>
-  </div>
+<div class="resume-page">
+  <div class="resume-glow resume-glow-a"></div>
+  <div class="resume-glow resume-glow-b"></div>
 
-  <object [data]="pdfUrl" type="application/pdf" class="pdf-viewer">
-    <p>
-      Your browser does not support PDF preview. Please click Download to
-      download the resume.
-    </p>
-  </object>
+  <!-- ── Hero ─────────────────────────────────────── -->
+  <section class="resume-hero">
+    <div class="resume-hero-inner">
+      <span class="resume-eyebrow">My Background</span>
+      <h1 class="resume-title">Resume &amp; Experience</h1>
+      <p class="resume-tagline">
+        I've worked on full-stack systems, led projects from zero to scale, and collaborated with teams across startups and enterprises.
+      </p>
+
+      <div class="resume-cta-row">
+        <a href="/assets/Resume.pdf" download="Geetansh-Sharma-Resume.pdf" class="resume-download-btn">
+          <svg class="rdb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span>Download PDF</span>
+        </a>
+
+        <div class="resume-meta">
+          <span class="rm-item">
+            <span class="rm-label">Last Updated</span>
+            <span class="rm-value">May 2026</span>
+          </span>
+          <span class="rm-item">
+            <span class="rm-label">Format</span>
+            <span class="rm-value">PDF</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PDF Viewer ──────────────────────────────── -->
+  <section class="resume-viewer">
+    <div class="rv-wrapper">
+      <div class="rv-header">
+        <h2>Full Resume</h2>
+        <p>View detailed work history and skills below</p>
+      </div>
+
+      <object [data]="pdfUrl" type="application/pdf" class="rv-pdf">
+        <div class="rv-fallback">
+          <p>Your browser does not support inline PDF viewing.</p>
+          <a href="/assets/Resume.pdf" download="Geetansh-Sharma-Resume.pdf" class="rv-download-link">
+            Click here to download the resume
+          </a>
+        </div>
+      </object>
+    </div>
+  </section>
 </div>

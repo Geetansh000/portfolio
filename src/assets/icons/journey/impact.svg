@@ -1,0 +1,17 @@
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgImpact" x1="12" y1="12" x2="84" y2="84" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0C4A6E"/>
+      <stop offset="1" stop-color="#166534"/>
+    </linearGradient>
+    <linearGradient id="trophy" x1="32" y1="26" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FEF9C3"/>
+      <stop offset="1" stop-color="#FACC15"/>
+    </linearGradient>
+  </defs>
+  <rect x="6" y="6" width="84" height="84" rx="20" fill="url(#bgImpact)"/>
+  <path d="M34 26H62V36C62 45 56 52 48 54C40 52 34 45 34 36V26Z" fill="url(#trophy)"/>
+  <path d="M34 30H27C27 37 30 41 36 42M62 30H69C69 37 66 41 60 42" stroke="#FEF08A" stroke-width="4" stroke-linecap="round"/>
+  <rect x="43" y="54" width="10" height="12" rx="2" fill="#FACC15"/>
+  <rect x="36" y="66" width="24" height="8" rx="3" fill="#EAB308"/>
+</svg>

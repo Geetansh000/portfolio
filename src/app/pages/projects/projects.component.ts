@@ -43,10 +43,11 @@ export class ProjectsComponent implements OnDestroy {
   projects: any[] = [];
   activeIndex = 0;
   @ViewChild('projectSlider', { static: false }) slider!: ElementRef;
-  private autoSlideInterval: any;
+  private autoSlideInterval: number | null = null;
   private autoSlideStarted = false;
   private dialogRef: MatDialogRef<LoaderDialogComponent> | null = null;
   private pendingTimeouts: number[] = [];
+  private readonly scrollHandler = this.handleScroll.bind(this);
 
   ngOnInit(): void {
     // Keep ngOnInit side-effect free to avoid NG0100 in Angular 21 dev mode.
@@ -111,16 +112,16 @@ export class ProjectsComponent implements OnDestroy {
     if (this.slider?.nativeElement) {
       this.slider.nativeElement.addEventListener(
         'scroll',
-        this.handleScroll.bind(this)
+        this.scrollHandler
       );
     }
   }
 
   handleScroll() {
     const container = this.slider.nativeElement as HTMLElement;
-    const children = Array.from(container.querySelectorAll('.project-card'));
+    const children = Array.from(container.querySelectorAll('.project-card')) as HTMLElement[];
 
-    const containerCenter = container.offsetLeft + container.offsetWidth / 2;
+    const containerCenter = container.scrollLeft + container.clientWidth / 2;
 
     let closestCard: HTMLElement | null = null;
     let minDistance = Number.MAX_VALUE;
@@ -136,35 +137,23 @@ export class ProjectsComponent implements OnDestroy {
     });
 
     if (closestCard) {
-      this.setActiveCard(closestCard);
-    }
-  }
-  setActiveCard(activeCard: HTMLElement) {
-    const cards = this.slider.nativeElement.querySelectorAll('.project-card');
-
-    cards.forEach((card: HTMLElement, index: any) => {
-      card.classList.remove('active', 'blurred-left', 'blurred-right');
-    });
-
-    const activeIndex = Array.from(cards).indexOf(activeCard);
-
-    cards.forEach((card: HTMLElement, index: any) => {
-      if (index === activeIndex) {
-        card.classList.add('active');
-      } else if (index === activeIndex - 1) {
-        card.classList.add('blurred-left');
-      } else if (index === activeIndex + 1) {
-        card.classList.add('blurred-right');
+      const closestIndex = children.indexOf(closestCard);
+      if (closestIndex !== -1 && closestIndex !== this.activeIndex) {
+        this.activeIndex = closestIndex;
+        this.cdr.detectChanges();
       }
-    });
+    }
   }
   scrollLeft() {
     const last = this.projects.pop();
     if (last) {
       this.projects.unshift(last);
+      this.projects = [...this.projects];
       this.activeIndex = this.getActiveIndex();
+      this.cdr.detectChanges();
       this.triggerCardAnimation();
       this.scrollToActive();
+      this.restartAutoSlide();
     }
   }
 
@@ -172,7 +161,9 @@ export class ProjectsComponent implements OnDestroy {
     const first = this.projects.shift();
     if (first) {
       this.projects.push(first);
+      this.projects = [...this.projects];
       this.activeIndex = this.getActiveIndex();
+      this.cdr.detectChanges();
       this.triggerCardAnimation();
       this.scrollToActive();
     }
@@ -216,15 +207,33 @@ export class ProjectsComponent implements OnDestroy {
     return Math.floor(this.projects.length / 2);
   }
   ngOnDestroy(): void {
-    clearInterval(this.autoSlideInterval); // 🧹 Clean up interval
+    if (this.autoSlideInterval !== null) {
+      clearInterval(this.autoSlideInterval);
+      this.autoSlideInterval = null;
+    }
     this.pendingTimeouts.forEach((timeoutId) => clearTimeout(timeoutId)); // 🧹 Clean up timeouts
     this.pendingTimeouts = [];
+    if (this.slider?.nativeElement) {
+      this.slider.nativeElement.removeEventListener('scroll', this.scrollHandler);
+    }
   }
 
   startAutoSlide() {
-    this.autoSlideInterval = setInterval(() => {
-      this.scrollRight(); // 👉 Move to the next project
-    }, 3000); // 3 seconds
+    if (this.autoSlideInterval !== null) {
+      clearInterval(this.autoSlideInterval);
+    }
+
+    this.autoSlideInterval = window.setInterval(() => {
+      if (this.projects.length > 1) {
+        this.scrollRight();
+      }
+    }, 3000);
+  }
+
+  private restartAutoSlide(): void {
+    if (this.autoSlideStarted && this.projects.length > 1) {
+      this.startAutoSlide();
+    }
   }
 
   viewProjectDetails(project: any): void {

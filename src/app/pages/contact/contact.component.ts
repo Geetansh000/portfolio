@@ -51,40 +51,7 @@ export class ContactComponent implements AfterViewInit {
 
   @ViewChild('contactForm') contactForm!: ElementRef;
 
-  ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.animateForm();
-    }
-  }
-
-  animateForm() {
-    const title = document.querySelector('.contact-title');
-    const groups = document.querySelectorAll('.form-group');
-    const button = document.querySelector('.submit-btn');
-    if (title)
-      gsap.from('.contact-title', {
-        opacity: 0,
-        y: -50,
-        duration: 1,
-        ease: 'power3.out',
-      });
-    if (groups)
-      gsap.from('.form-group', {
-        opacity: 0,
-        y: 50,
-        stagger: 0.2,
-        duration: 0.8,
-        ease: 'power3.out',
-      });
-    if (button)
-      gsap.from('.submit-btn', {
-        opacity: 0,
-        scale: 0.8,
-        delay: 1,
-        duration: 0.8,
-        ease: 'power3.out',
-      });
-  }
+  ngAfterViewInit() {}
 
   onSubmit(form: NgForm) {
     if (form.valid) {

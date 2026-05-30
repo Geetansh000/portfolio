@@ -1,5 +1,13 @@
 <div class="projects-section">
-  <h2 class="section-title">My Projects</h2>
+  <div class="projects-glow projects-glow-a"></div>
+  <div class="projects-glow projects-glow-b"></div>
+
+  <p class="section-eyebrow">Selected Work</p>
+  <h2 class="section-title">Project Showcase</h2>
+  <p class="section-subtitle">
+    A curated selection of systems engineered for reliability, speed, and delightful UX.
+  </p>
+  <p class="section-hint">Click the center card to dive into project details</p>
 
   <div
     class="projects-grid"
@@ -10,6 +18,7 @@
     <mat-card
       *ngFor="let project of projects; let i = index"
       class="project-card"
+      [style.--accent]="project.color"
       [ngClass]="{
         active: i === activeIndex,
         'blurred-left': i < activeIndex,
@@ -17,31 +26,34 @@
       }"
       (click)="viewProjectDetails(project)"
     >
-      <div
-        class="card-color-bar"
-        [ngStyle]="{ 'background-color': project.color }"
-      ></div>
+      <div class="card-color-bar"></div>
       <div class="card-body">
-        <img
-          class="project-image"
-          [src]="project.icon"
-          alt="{{ project.title }}"
-        />
+        <div class="card-top">
+          <div class="image-wrap">
+            <img
+              class="project-image"
+              [src]="project.icon"
+              alt="{{ project.title }}"
+            />
+          </div>
+          <span class="project-type-chip">{{ project.type }}</span>
+        </div>
+
+        <span class="project-index">0{{ i + 1 }}</span>
 
         <mat-card-title>{{ project.title }}</mat-card-title>
         <mat-card-content>
           <p class="description">{{ project.short_description }}</p>
-          <p class="role">
-            {{ project.role }}
-          </p>
-          <p class="type">({{ project.type }})</p>
+          <p class="role">{{ project.role }}</p>
         </mat-card-content>
+
+        <button class="project-open-btn" type="button">Open Project</button>
       </div>
     </mat-card>
   </div>
 
   <div class="slider-controls" *ngIf="projects.length > 1">
-    <button (click)="scrollLeft()">&larr;</button>
-    <button (click)="scrollRight()">&rarr;</button>
+    <button aria-label="Show previous project" (click)="scrollLeft()">Previous</button>
+    <button aria-label="Show next project" (click)="scrollRight()">Next</button>
   </div>
 </div>

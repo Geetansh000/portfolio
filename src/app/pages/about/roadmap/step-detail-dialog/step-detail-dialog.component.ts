@@ -18,6 +18,9 @@ export class StepDetailDialogComponent {
     description: string;
     longDescription: string;
     strongWords: string[];
+    year?: string;
+    badge?: string;
+    icon?: string;
   };
 
   showPopup: boolean = false;
