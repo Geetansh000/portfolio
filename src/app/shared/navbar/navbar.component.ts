@@ -5,6 +5,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
@@ -20,7 +21,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-navbar',
@@ -56,14 +56,12 @@ export class NavbarComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private overlay: OverlayContainer,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
   ) {
-    // Immediate theme setup
     if (isPlatformBrowser(this.platformId)) {
       const savedTheme = localStorage.getItem('theme') || 'dark-theme';
       this.isDarkTheme = savedTheme === 'dark-theme';
-
-      document.documentElement.classList.add(this.isDarkTheme ? 'dark-theme' : 'light-theme');
+      this.applyThemeClasses();
     }
   }
 
@@ -80,11 +78,24 @@ export class NavbarComponent implements OnInit {
 
   toggleTheme() {
     this.isDarkTheme = !this.isDarkTheme;
+    this.applyThemeClasses();
+
+    localStorage.setItem(
+      'theme',
+      this.isDarkTheme ? 'dark-theme' : 'light-theme',
+    );
+  }
+
+  private applyThemeClasses(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
 
     const root = document.documentElement;
+    const overlayContainer = this.overlay.getContainerElement();
+
     root.classList.toggle('dark-theme', this.isDarkTheme);
     root.classList.toggle('light-theme', !this.isDarkTheme);
 
-    localStorage.setItem('theme', this.isDarkTheme ? 'dark-theme' : 'light-theme');
+    overlayContainer.classList.toggle('dark-theme', this.isDarkTheme);
+    overlayContainer.classList.toggle('light-theme', !this.isDarkTheme);
   }
 }

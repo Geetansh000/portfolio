@@ -1,73 +1,73 @@
-<!-- <ng-container [class.hidden]="!isReady"> -->
 <mat-sidenav-container class="sidenav-container">
-  <!-- Sidenav for mobile -->
   <mat-sidenav
     #drawer
     class="app-sidenav"
     [mode]="'over'"
     [opened]="isMobile && isSidenavOpen"
+    [autoFocus]="false"
     (closedStart)="isSidenavOpen = false"
   >
-    <nav class="drawer-links">
-      <a
-        mat-button
-        routerLink="/"
-        routerLinkActive="active"
-        (click)="drawer.close()"
-      >
-        <mat-icon>home</mat-icon>
-        <span>Home</span>
-      </a>
+    <div class="drawer-shell">
+      <div class="drawer-header">
+        <div class="drawer-brand">
+          <span class="drawer-title">My Portfolio</span>
+          <span class="drawer-subtitle">Backend Developer</span>
+        </div>
+        <button
+          mat-icon-button
+          class="drawer-close"
+          aria-label="Close navigation menu"
+          (click)="drawer.close(); isSidenavOpen = false"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
 
-      <a
-        mat-button
-        routerLink="/about"
-        routerLinkActive="active"
-        (click)="drawer.close()"
-      >
-        <mat-icon>info</mat-icon>
-        <span>About</span>
-      </a>
+      <nav class="drawer-links" aria-label="Mobile navigation links">
+        <a
+          mat-button
+          class="drawer-link"
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="drawer.close()"
+        >
+          <mat-icon>home</mat-icon>
+          <span>Home</span>
+        </a>
 
-      <a
-        mat-button
-        routerLink="/projects"
-        routerLinkActive="active"
-        (click)="drawer.close()"
-      >
-        <mat-icon>work</mat-icon>
-        <span>Projects</span>
-      </a>
+        <a mat-button class="drawer-link" routerLink="/about" routerLinkActive="active" (click)="drawer.close()">
+          <mat-icon>info</mat-icon>
+          <span>About</span>
+        </a>
 
-      <a
-        mat-button
-        routerLink="/contact"
-        routerLinkActive="active"
-        (click)="drawer.close()"
-      >
-        <mat-icon>mail</mat-icon>
-        <span>Contact</span>
-      </a>
+        <a mat-button class="drawer-link" routerLink="/projects" routerLinkActive="active" (click)="drawer.close()">
+          <mat-icon>work</mat-icon>
+          <span>Projects</span>
+        </a>
 
-      <a
-        mat-button
-        routerLink="/resume"
-        routerLinkActive="active"
-        (click)="drawer.close()"
-      >
-        <mat-icon>description</mat-icon>
-        <span>Resume</span>
-      </a>
-    </nav>
+        <a mat-button class="drawer-link" routerLink="/contact" routerLinkActive="active" (click)="drawer.close()">
+          <mat-icon>mail</mat-icon>
+          <span>Contact</span>
+        </a>
+
+        <a mat-button class="drawer-link" routerLink="/resume" routerLinkActive="active" (click)="drawer.close()">
+          <mat-icon>description</mat-icon>
+          <span>Resume</span>
+        </a>
+      </nav>
+
+      <div class="drawer-footer">
+        <span>Designing resilient APIs and scalable systems</span>
+      </div>
+    </div>
   </mat-sidenav>
 
-  <!-- Toolbar + content -->
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <!-- Show hamburger only on mobile -->
       <button
         mat-icon-button
-        class="sidenav-toggle mobile-links"
+        class="sidenav-toggle mobile-toggle"
         (click)="toggleSidenav(drawer)"
         [@rotateHamburger]="isSidenavOpen ? 'open' : 'closed'"
         aria-label="Open navigation menu"
@@ -82,16 +82,20 @@
 
       <span class="spacer"></span>
 
-      <!-- Desktop links -->
       <div class="navbar-links desktop-links" *ngIf="!isMobile">
-        <a routerLink="/" routerLinkActive="active">Home</a>
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          Home
+        </a>
         <a routerLink="/about" routerLinkActive="active">About</a>
         <a routerLink="/projects" routerLinkActive="active">Projects</a>
         <a routerLink="/contact" routerLinkActive="active">Contact</a>
         <a routerLink="/resume" routerLinkActive="active">Resume</a>
       </div>
 
-      <!-- Theme toggle -->
       <button
         mat-icon-button
         (click)="toggleTheme()"
@@ -106,4 +110,3 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-<!-- </ng-container> -->
