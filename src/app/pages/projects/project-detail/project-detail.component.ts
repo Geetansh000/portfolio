@@ -1,15 +1,15 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, DestroyRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiRoutesService } from '../../../shared/api-routes.service';
-import { take } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { LoaderDialogComponent } from '../../../shared/loader-dialog/loader-dialog.component';
 
 @Component({
   selector: 'app-project-detail',
   templateUrl: './project-detail.component.html',
-  styleUrls: ['./project-detail.component.scss'],
+  styleUrl: './project-detail.component.scss',
   standalone: true,
   imports: [CommonModule, NgFor],
 })
@@ -17,27 +17,31 @@ export class ProjectDetailComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private projectService: ApiRoutesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private destroyRef: DestroyRef,
+    private readonly cdr: ChangeDetectorRef
   ) {}
 
-  project: any = {};
+  project: any = null;
   showIcons = true;
   techCategories: string[] = [];
   slug: string = '';
   display = false;
+  private pendingTimeouts: number[] = [];
 
   ngOnInit(): void {
     const dialogRef = this.dialog.open(LoaderDialogComponent);
 
-    this.route.paramMap.pipe(take(1)).subscribe({
+    this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (param) => {
         const slug = param.get('id');
         if (slug) {
           this.slug = slug;
           this.getProjectDetails(slug);
-          setTimeout(() => {
-            dialogRef.close(), (this.display = true);
+          const closeTimeout = window.setTimeout(() => {
+            dialogRef.close();
           }, 300);
+          this.pendingTimeouts.push(closeTimeout);
         } else {
           console.error('Slug not found in route');
         }
@@ -46,16 +50,26 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   getProjectDetails(slug: string) {
-    this.projectService.getProjectDetails(slug).subscribe({
+    this.projectService.getProjectDetails(slug).pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe({
       next: (data) => {
         this.project = data;
         this.techCategories = Object.keys(this.project?.tech_skills || {});
+        this.display = true;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Failed to load project', err);
       },
     });
   }
+
+  ngOnDestroy(): void {
+    this.pendingTimeouts.forEach((timeoutId) => clearTimeout(timeoutId));
+    this.pendingTimeouts = [];
+  }
+
   onImageError(event: Event) {
     const imgElement = event.target as HTMLImageElement;
     imgElement.style.display = 'none'; // hide if image fails to load

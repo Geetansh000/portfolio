@@ -7,7 +7,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './resume.component.html',
-  styleUrls: ['./resume.component.scss'],
+  styleUrl: './resume.component.scss',
 })
 export class ResumeComponent {
   pdfUrl: SafeResourceUrl;

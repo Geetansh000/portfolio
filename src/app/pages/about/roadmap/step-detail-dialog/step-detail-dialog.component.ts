@@ -9,7 +9,7 @@ import { SharedModule } from '../../../../shared/shared.module';
   standalone: true,
   imports: [MatCardModule, CommonModule, SharedModule],
   templateUrl: './step-detail-dialog.component.html',
-  styleUrls: ['./step-detail-dialog.component.scss'],
+  styleUrl: './step-detail-dialog.component.scss',
 })
 export class StepDetailDialogComponent {
   constructor(private sanitizer: DomSanitizer) {}

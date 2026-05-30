@@ -9,7 +9,7 @@ import { StepDetailDialogComponent } from './step-detail-dialog/step-detail-dial
   selector: 'app-roadmap',
   standalone: true,
   templateUrl: './roadmap.component.html',
-  styleUrls: ['./roadmap.component.scss'],
+  styleUrl: './roadmap.component.scss',
   imports: [MatCardModule, SharedModule, CommonModule],
 })
 export class RoadmapComponent {
@@ -95,7 +95,7 @@ export class RoadmapComponent {
     this.openStepDetail(this.steps[index]);
     // this.aeroplanePosition = (index / (this.steps.length - 1)) * 100; // Move aeroplane
   }
-  @HostListener('window:scroll', ['$event'])
+  @HostListener('window:scroll')
   onWindowScroll() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const container = document.querySelector(

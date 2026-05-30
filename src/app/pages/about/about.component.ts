@@ -7,7 +7,8 @@ import { RoadmapComponent } from './roadmap/roadmap.component';
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss'],
+  styleUrl: './about.component.scss',
   imports: [MatCardModule, CommonModule, RoadmapComponent, SharedModule],
+  standalone: true,
 })
 export class AboutComponent {}

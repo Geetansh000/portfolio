@@ -21,6 +21,7 @@ import { ApiRoutesService } from '../../shared/api-routes.service';
 
 @Component({
   selector: 'app-contact',
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -31,7 +32,7 @@ import { ApiRoutesService } from '../../shared/api-routes.service';
     MatFormFieldModule,
   ],
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.scss'],
+  styleUrl: './contact.component.scss',
 })
 export class ContactComponent implements AfterViewInit {
   constructor(

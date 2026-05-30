@@ -11,9 +11,9 @@
       *ngFor="let project of projects; let i = index"
       class="project-card"
       [ngClass]="{
-        active: i === getActiveIndex(),
-        'blurred-left': i < getActiveIndex(),
-        'blurred-right': i > getActiveIndex()
+        active: i === activeIndex,
+        'blurred-left': i < activeIndex,
+        'blurred-right': i > activeIndex
       }"
       (click)="viewProjectDetails(project)"
     >

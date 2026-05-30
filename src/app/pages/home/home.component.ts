@@ -1,15 +1,19 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, DestroyRef } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  styleUrl: './home.component.scss',
   imports: [MatCardModule],
+  standalone: true,
 })
 export class HomeComponent implements OnInit {
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private destroyRef: DestroyRef
+  ) {}
 
   private textArray: string[] = [
     'Welcome to the World of Geetansh Sharma , a Software Developer, Expert in Node.js, NestJS, and Python ML',
@@ -20,6 +24,7 @@ export class HomeComponent implements OnInit {
   private currentIndex: number = 0; // Index of the current string
   private charIndex: number = 0; // Index of the current character
   private isErasing: boolean = false; // Whether the text is being erased
+  private typingTimeoutId: number | null = null; // Store timeout ID for cleanup
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -40,14 +45,20 @@ export class HomeComponent implements OnInit {
           this.currentIndex
         ].charAt(this.charIndex);
         this.charIndex++;
-        setTimeout(() => this.startTypingEffect(), this.typingSpeed);
+        this.typingTimeoutId = window.setTimeout(() => this.startTypingEffect(), this.typingSpeed);
+        this.destroyRef.onDestroy(() => {
+          if (this.typingTimeoutId !== null) clearTimeout(this.typingTimeoutId);
+        });
       } else if (this.isErasing && this.charIndex > 0) {
         // Erasing characters
         dynamicTextElement.textContent = this.textArray[
           this.currentIndex
         ].substring(0, this.charIndex - 1);
         this.charIndex--;
-        setTimeout(() => this.startTypingEffect(), this.erasingSpeed);
+        this.typingTimeoutId = window.setTimeout(() => this.startTypingEffect(), this.erasingSpeed);
+        this.destroyRef.onDestroy(() => {
+          if (this.typingTimeoutId !== null) clearTimeout(this.typingTimeoutId);
+        });
       } else {
         // Switch between typing and erasing
         this.isErasing = !this.isErasing;
@@ -56,7 +67,10 @@ export class HomeComponent implements OnInit {
           // Move to the next string in the array
           this.currentIndex = (this.currentIndex + 1) % this.textArray.length;
         }
-        setTimeout(() => this.startTypingEffect(), this.newTextDelay);
+        this.typingTimeoutId = window.setTimeout(() => this.startTypingEffect(), this.newTextDelay);
+        this.destroyRef.onDestroy(() => {
+          if (this.typingTimeoutId !== null) clearTimeout(this.typingTimeoutId);
+        });
       }
     }
   }

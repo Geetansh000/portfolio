@@ -1,7 +1,6 @@
 <div
   class="project-detail"
-  *ngIf="project"
-  [ngStyle]="{ display: display ? 'block' : 'none' }"
+  *ngIf="display && project"
 >
   <div class="project-detail-container">
     <!-- Title -->

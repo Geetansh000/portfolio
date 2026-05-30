@@ -1,7 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,55 +31,75 @@ import { LoaderDialogComponent } from '../../shared/loader-dialog/loader-dialog.
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
 })
-export class ProjectsComponent {
+export class ProjectsComponent implements OnDestroy {
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private readonly projectService: ApiRoutesService
+    private readonly projectService: ApiRoutesService,
+    private readonly cdr: ChangeDetectorRef
   ) {}
   selectedProject: any;
   display = false;
   projects: any[] = [];
-  ngOnInit(): void {
-    const dialogRef = this.dialog.open(LoaderDialogComponent);
-
-    // First call immediately
-    this.getProjectList(dialogRef);
-
-    // Second call after 10 seconds if still no projects
-    setTimeout(() => {
-      if (!this.projects.length) {
-        this.getProjectList(dialogRef);
-      }
-    }, 10000); // 10 seconds
-
-    // Close loader after 20 seconds if still no data
-    setTimeout(() => {
-      if (!this.projects.length) {
-        dialogRef.close();
-      }
-    }, 20000); // 20 seconds
-
-    this.startAutoSlide();
-  }
-
+  activeIndex = 0;
   @ViewChild('projectSlider', { static: false }) slider!: ElementRef;
   private autoSlideInterval: any;
+  private autoSlideStarted = false;
+  private dialogRef: MatDialogRef<LoaderDialogComponent> | null = null;
+  private pendingTimeouts: number[] = [];
+
+  ngOnInit(): void {
+    // Keep ngOnInit side-effect free to avoid NG0100 in Angular 21 dev mode.
+  }
 
   ngAfterViewInit() {
-    setTimeout(() => {
+    const initTimeout = window.setTimeout(() => {
+      this.dialogRef = this.dialog.open(LoaderDialogComponent);
+      this.getProjectList();
+
+      // Second call after 10 seconds if still no projects
+      const retryTimeout = window.setTimeout(() => {
+        if (!this.projects.length) {
+          this.getProjectList();
+        }
+      }, 10000);
+      this.pendingTimeouts.push(retryTimeout);
+
+      // Close loader after 20 seconds if still no data
+      const closeTimeout = window.setTimeout(() => {
+        if (!this.projects.length) {
+          this.dialogRef?.close();
+        }
+      }, 20000);
+      this.pendingTimeouts.push(closeTimeout);
+
       this.scrollToActive();
       this.attachScrollListener();
     }, 0);
+    this.pendingTimeouts.push(initTimeout);
   }
 
-  getProjectList(dialogRef: any) {
+  getProjectList() {
     this.projectService.getProjects().subscribe({
       next: (data) => {
-        this.projects = data;
-        setTimeout(() => {
-          dialogRef.close(), (this.display = true);
-        }, 300); // smoother transition
+        const renderTimeout = window.setTimeout(() => {
+          this.projects = [...data];
+          this.activeIndex = this.getActiveIndex();
+          this.cdr.detectChanges();
+
+          if (!this.autoSlideStarted && this.projects.length > 1) {
+            this.startAutoSlide();
+            this.autoSlideStarted = true;
+          }
+
+          const closeTimeout = window.setTimeout(() => {
+            this.dialogRef?.close();
+            this.display = true;
+            this.cdr.detectChanges();
+          }, 300); // smoother transition
+          this.pendingTimeouts.push(closeTimeout);
+        }, 0);
+        this.pendingTimeouts.push(renderTimeout);
       },
 
       error: (err) => {
@@ -136,6 +162,7 @@ export class ProjectsComponent {
     const last = this.projects.pop();
     if (last) {
       this.projects.unshift(last);
+      this.activeIndex = this.getActiveIndex();
       this.triggerCardAnimation();
       this.scrollToActive();
     }
@@ -145,12 +172,13 @@ export class ProjectsComponent {
     const first = this.projects.shift();
     if (first) {
       this.projects.push(first);
+      this.activeIndex = this.getActiveIndex();
       this.triggerCardAnimation();
       this.scrollToActive();
     }
   }
   triggerCardAnimation() {
-    setTimeout(() => {
+    const animTimeout = window.setTimeout(() => {
       const container = this.slider.nativeElement as HTMLElement;
       container.querySelectorAll('.project-card').forEach((card) => {
         card.classList.remove('entering');
@@ -161,6 +189,7 @@ export class ProjectsComponent {
         activeCard.classList.add('entering');
       }
     }, 0);
+    this.pendingTimeouts.push(animTimeout);
   }
 
   scrollToActive() {
@@ -171,7 +200,8 @@ export class ProjectsComponent {
 
     if (activeCard) {
       activeCard.classList.add('entering');
-      setTimeout(() => activeCard.classList.remove('entering'), 600); // cleanup after animation
+      const cleanupTimeout = window.setTimeout(() => activeCard.classList.remove('entering'), 600);
+      this.pendingTimeouts.push(cleanupTimeout);
 
       const containerCenter = container.offsetWidth / 2;
       const cardCenter = activeCard.offsetLeft + activeCard.offsetWidth / 2;
@@ -186,7 +216,9 @@ export class ProjectsComponent {
     return Math.floor(this.projects.length / 2);
   }
   ngOnDestroy(): void {
-    clearInterval(this.autoSlideInterval); // 🧹 Clean up on destroy
+    clearInterval(this.autoSlideInterval); // 🧹 Clean up interval
+    this.pendingTimeouts.forEach((timeoutId) => clearTimeout(timeoutId)); // 🧹 Clean up timeouts
+    this.pendingTimeouts = [];
   }
 
   startAutoSlide() {

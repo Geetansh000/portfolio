@@ -6,6 +6,7 @@ import { gsap } from 'gsap';
 
 @Component({
   selector: 'app-message-sent-dialog',
+  standalone: true,
   imports: [
     CommonModule,
     MatIconModule, // ✅ This is required for <mat-icon> to work
