@@ -34,10 +34,17 @@
   color: var(--text-colour);
 }
 
+mat-card-header {
+  justify-content: center;
+}
+
+mat-card-title,
 mat-card-title h1 {
-  margin: 0.5rem 0;
+  margin: 0.5rem auto;
+  width: 100%;
   font-size: clamp(1.65rem, 3vw, 2.7rem);
   line-height: 1.2;
+  text-align: center !important;
 }
 
 .hero-note {

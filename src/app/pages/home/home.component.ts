@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   private textArray: string[] = [
-    'Welcome to the World of Geetansh Sharma , a Software Developer, Expert in Node.js, NestJS, and Python ML',
+    'Backend Engineer • Node.js • NestJS • Python • PostgreSQL • Building Systems That Scale',
   ];
   private typingSpeed: number = 100; // Speed of typing
   private erasingSpeed: number = 50; // Speed of erasing

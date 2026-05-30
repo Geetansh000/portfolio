@@ -176,10 +176,33 @@
       animation: aboutReveal 0.75s 0.1s ease both;
     }
 
+    .skill-groups {
+      display: flex;
+      flex-direction: column;
+      gap: 2.4rem;
+    }
+
+    .skill-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .skill-group-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 0;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid color-mix(in srgb, var(--primary) 25%, transparent);
+    }
+
     .skills-grid {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
+      justify-content: flex-start;
       gap: 1rem;
     }
 
@@ -228,6 +251,20 @@
 
       &:hover img {
         transform: scale(1.1) rotate(4deg);
+      }
+
+      .skill-icon-placeholder {
+        width: 3.2rem;
+        height: 3.2rem;
+        border-radius: 12px;
+        background: color-mix(in srgb, var(--primary) 14%, transparent);
+        border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: var(--primary);
       }
 
       .skill-meta {

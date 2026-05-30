@@ -40,15 +40,21 @@
   <div class="skills-section" #skillsSection>
     <h2>Core Skills</h2>
     <p class="skills-subtitle">
-      End-to-end engineering capabilities spanning API architecture, modern frontend, data systems, and production delivery.
+      End-to-end engineering capabilities spanning API architecture, modern backend, databases, and cloud infrastructure.
     </p>
 
-    <div class="skills-grid">
-      <div class="skill-card" *ngFor="let skill of coreSkills; let i = index" [ngStyle]="getCardVars(i)">
-        <img [src]="skill.icon" [alt]="skill.name + ' icon'" loading="lazy" />
-        <div class="skill-meta">
-          <h3>{{ skill.name }}</h3>
-          <span>{{ skill.track }}</span>
+    <div class="skill-groups">
+      <div class="skill-group" *ngFor="let group of skillGroups">
+        <h3 class="skill-group-title">{{ group.category }}</h3>
+        <div class="skills-grid">
+          <div class="skill-card" *ngFor="let skill of group.skills; let i = index" [ngStyle]="getCardVars(i)">
+            <img *ngIf="skill.icon" [src]="skill.icon" [alt]="skill.name + ' icon'" loading="lazy" />
+            <div class="skill-icon-placeholder" *ngIf="!skill.icon">{{ skill.name.charAt(0) }}</div>
+            <div class="skill-meta">
+              <h3>{{ skill.name }}</h3>
+              <span>{{ skill.track }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
